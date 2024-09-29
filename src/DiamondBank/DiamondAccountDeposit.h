@@ -3,16 +3,20 @@
 
 #include <string>
 #include "../Bank/IAccountDeposit.h"
-#include "../Bank/BankFeature.h"
+#include "../Bank/BankFeature2.h"
+#include "../UI/Form.h"
 
-class DiamondAccountDeposit : public IAccountDeposit, public BankFeature{
+class DiamondAccountDeposit : public IAccountDeposit, public BankFeature2, public Form{
     void AskForInput();
 public:
     DiamondAccountDeposit();
+    void Initialize() override;
+    void Content() override;
+    void ProcessInput() override;
+    
     void SetTransactionFee(float depositFee) override;
     bool CheckIfCanDeposit(float toDeposit) override;
     bool Deposit(float toDeposit) override;
-    void OnChoose(int choice) override;
 };
 
 #endif

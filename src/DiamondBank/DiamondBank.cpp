@@ -86,23 +86,23 @@ void DiamondBank::LaunchUI()
 
 void DiamondBank::OnChoose_Login(int choice)
 {
-    if(choice == 1) ((DiamondAccountLogin*)accountLogin)->ShowMenu();
-    else if(choice == 2) ((DiamondAccountCreate*)accountCreate)->ShowMenu();
+    if(choice == 1) ((DiamondAccountLogin*)accountLogin)->Show();
+    else if(choice == 2) ((DiamondAccountCreate*)accountCreate)->Show();
 }
 void DiamondBank::OnChoose_SignedIn(int choice)
 {
     switch(choice){
         case 1:
-            ((DiamondAccountCheckBalance*)accountCheckBalance)->ShowMenu();
+            ((DiamondAccountCheckBalance*)accountCheckBalance)->Show();
             break;
         case 2:
-            ((DiamondAccountDeposit*)accountDeposit)->ShowMenu();
+            ((DiamondAccountDeposit*)accountDeposit)->Show();
             break;
         case 3:
-            ((DiamondAccountWithdraw*)accountWithdraw)->ShowMenu();
+            ((DiamondAccountWithdraw*)accountWithdraw)->Show();
             break;
         case 4:
-            ((DiamondAccountClose*)accountClose)->ShowMenu();
+            ((DiamondAccountClose*)accountClose)->Show();
             break;
         case 5:
             ((DiamondAccountLogin*)accountLogin)->Logout();

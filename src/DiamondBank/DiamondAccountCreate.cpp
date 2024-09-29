@@ -1,16 +1,34 @@
 #include "DiamondAccountCreate.h"
+#include "../InputValidation/InputValidationPassword.h"
 #include <iostream>
 DiamondAccountCreate::DiamondAccountCreate()
 {
-    menu.name = "Diamond Account Create form";
-    std::string actions[] = {
-        "Create an account",
-        // "Already have an account?",
-        "Go back"
-    };
-    int size = sizeof(actions)/sizeof(actions[0]);
-    menu.SetActions(actions,size);
-    menu.SetChooseCallback(std::bind(&DiamondAccountCreate::OnChoose,this,std::placeholders::_1));
+    name = "Diamond Account Create form";
+}
+
+void DiamondAccountCreate::Initialize()
+{
+    FormQuestion question;
+    question.Set<std::string>("Email","");
+    formData.emplace("email",question);
+    question.Set<std::string>("Name","");
+    formData.emplace("name",question);
+
+    question.AddValidationRule(new InputValidationPassword());
+    question.Set<std::string>("Password","");
+    formData.emplace("pass",question);
+
+    question.Set<std::string>("Confirm Password","");
+    formData.emplace("confirmPass",question);
+}
+void DiamondAccountCreate::Content(){
+    int num = 1;
+    for(auto& kv : formData){
+    cout << "Here" << endl;
+        cout << num << ". " << kv.second.GetQuestion() << ":\t";
+        kv.second.GetInput();
+        num++;
+    }
 }
 
 bool DiamondAccountCreate::CheckIfExisting(std::string email)
@@ -28,44 +46,33 @@ bool DiamondAccountCreate::Create(AccountInfo user, std::string pass)
     return GetBank()->GetAccountDatabase()->CreateAccount(user,pass);
 }
 
-void DiamondAccountCreate::OnChoose(int choice)
-{
-    if(choice == 1){
-        AskForNewCredentials();
-    }
-}
-
-void DiamondAccountCreate::AskForNewCredentials()
+void DiamondAccountCreate::ProcessInput()
 {
     AccountInfo newUser;
     
-    menu.Log("Email: ");
-    std::cin >> newUser.Email;
+    newUser.Email = formData["email"].GetResponse<string>();
     if(CheckIfExisting(newUser.Email)){
-        menu.Log("An account with that email already exists. Try logging in.",true);
-        menu.Hide();
+        Log("An account with that email already exists. Try logging in.",true);
+        Hide();
         return;
     }
 
-    menu.Log("Name: ");
-    std::cin >> newUser.Name;
+    newUser.Name = formData["name"].GetResponse<string>();
 
     std::string pass = "",confirmPass = "";
-    menu.Log("Password: ");
-    std::cin >> pass;
-    menu.Log("Confirm Password: ");
-    std::cin >> confirmPass;
+    pass = formData["pass"].GetResponse<string>();
+    confirmPass = formData["confirmPass"].GetResponse<string>();
     
     if(!CheckIfValidPassword(pass,confirmPass)){
-        menu.Log("Invalid password or pass and confirm password is not the same. Try making it longer or same.",true);
+        Log("Invalid password or pass and confirm password is not the same. Try making it longer or same.",true);
         return;
     }
 
     if(Create(newUser,pass)){
-        menu.Log("User account created successfully. Please sign in.");
-        menu.Hide();
+        Log("User account created successfully. Please sign in.");
+        Hide();
     }
     else{
-        menu.Log("Unable to create user account. Try again.", true);
+        Log("Unable to create user account. Try again.", true);
     }
 }

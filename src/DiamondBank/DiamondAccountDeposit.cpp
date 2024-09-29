@@ -1,21 +1,36 @@
 #include "DiamondAccountDeposit.h"
 #include <iostream>
 #include "../Utility/TextHelper.h"
+#include "../InputValidation/InputValidationNumber.h"
 
 DiamondAccountDeposit::DiamondAccountDeposit()
 {
-    menu.name = "Diamond Account Deposit";
-    std::string actions[] = {
-        "Deposit",
-        "Go back"
-    };
-    int size = sizeof(actions)/sizeof(actions[0]);
-    menu.SetActions(actions,size);
-    menu.SetChooseCallback(std::bind(&DiamondAccountDeposit::OnChoose,this,std::placeholders::_1));
+    name = "Diamond Account Deposit";
+}
+
+void DiamondAccountDeposit::Initialize()
+{
+    FormQuestion question;
+    question.Set<float>("How much do you want to deposit",0.f);
+    question.AddValidationRule(new InputValidationNumber());
+    formData.emplace("deposit",question);
+}
+void DiamondAccountDeposit::Content()
+{
+    AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
+    float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
+    Log("You currently have " + TextHelper::FixedFloat(diamonds) + " diamond(s).");
+
+    int num = 1;
+    for(auto& kv : formData){
+        cout << num << ". " << kv.second.GetQuestion() << ":\t";
+        kv.second.GetInput();
+        num++;
+    }
 }
 
 bool DiamondAccountDeposit::CheckIfCanDeposit(float amount)
-{
+{// we can add limit to how much one can deposit here
     return true;
 }
 
@@ -29,32 +44,23 @@ void DiamondAccountDeposit::SetTransactionFee(float depositFee)
     transactionFee = std::min(depositFee,1.0f);
 }
 
-
-void DiamondAccountDeposit::OnChoose(int choice)
+void DiamondAccountDeposit::ProcessInput()
 {
-    if(choice == 1){
-        AskForInput();
-    }
-}
-
-void DiamondAccountDeposit::AskForInput()
-{
-    AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
-    float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-    menu.Log("You currently have " + TextHelper::FixedFloat(diamonds) + " diamond(s).");
-    menu.Log("How much would you deposit?");
-
-    float toDeposit = 0;
-    std::cin >> toDeposit;
+    float toDeposit = formData["deposit"].GetResponse<float>();
     
-    if(toDeposit < 0) { menu.Log("Invalid input", true); return; }
+    if(toDeposit < 0) { Log("Invalid input", true); return; }
 
     if(Deposit(toDeposit)){
-        menu.Log("You deposited " + TextHelper::FixedFloat(toDeposit) + " diamond(s).");
+        Log("You deposited " + TextHelper::FixedFloat(toDeposit) + " diamond(s).");
+        
+        AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
+        float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
         diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-        menu.Log("You now have a total of " + TextHelper::FixedFloat(diamonds) + " diamond(s) left in the bank.");
+        Log("You now have a total of " + TextHelper::FixedFloat(diamonds) + " diamond(s) left in the bank.");
     }
     else{
-        menu.Log("Unable to deposit at this time. Try again later.",true);
+        Log("Unable to deposit at this time. Try again later.",true);
     }
+    Hide();
+    Pause();
 }

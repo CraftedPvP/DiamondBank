@@ -29,6 +29,8 @@ public:
     void Pause();
     void ClearScreen();
     void ClearInput();
+    
+    void Log(std::string content, bool isError = false);
 };
 
 #endif

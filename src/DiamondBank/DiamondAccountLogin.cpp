@@ -3,16 +3,7 @@
 
 DiamondAccountLogin::DiamondAccountLogin()
 {
-    menu.name = "Diamond Account Login";
-    std::string actions[] = {
-        "Login",
-        // "Create a new account",
-        // "Forget Password",
-        "Go back"
-    };
-    int size = sizeof(actions)/sizeof(actions[0]);
-    menu.SetActions(actions,size);
-    menu.SetChooseCallback(std::bind(&DiamondAccountLogin::OnChoose,this,std::placeholders::_1));
+    name = "Diamond Account Login";
 }
 
 DiamondAccountLogin::~DiamondAccountLogin()
@@ -26,7 +17,7 @@ bool DiamondAccountLogin::Login(std::string email, std::string pass)
 {
     AccountInfo user = GetBank()->GetAccountDatabase()->Login(email,pass);
     if(user.Email == ""){
-        menu.Log("Invalid account credentials. Please check your email or password", true);
+        Log("Invalid account credentials. Please check your email or password", true);
     }
 
     currentUser = user;
@@ -35,42 +26,50 @@ bool DiamondAccountLogin::Login(std::string email, std::string pass)
 
 bool DiamondAccountLogin::IsLoggedIn() { return currentUser.Email != ""; }
 
-void DiamondAccountLogin::OnChoose(int choice)
-{
-    if(choice == 1){
-        AskForLoginCredentials();
-    }
-}
-
 void DiamondAccountLogin::Logout()
 {
     // clear it in-case it gets read afterwards
     currentUser.Email = "";
     currentUser.Name = "";
 
-    menu.Log("Logged out");
+    Log("Logged out");
 
     if(onLogoutSuccess) onLogoutSuccess();
 }
+
+void DiamondAccountLogin::Initialize()
+{
+    FormQuestion question;
+    question.Set<std::string>("Email","");
+    formData.emplace("email",question);
+    question.Set<std::string>("Password","");
+    formData.emplace("pass",question);
+}
+
+void DiamondAccountLogin::Content()
+{
+    int num = 1;
+    for(auto& kv : formData){
+        cout << num << ". " << kv.second.GetQuestion() << ":\t";
+        kv.second.GetInput();
+        num++;
+    }
+}
+
 
 void DiamondAccountLogin::SetOnLoginSuccess(OnLoginSuccess callback) { onLoginSuccess = callback; }
 
 void DiamondAccountLogin::SetOnLogoutSuccess(OnLogoutSuccess callback){ onLogoutSuccess = callback; }
 
-void DiamondAccountLogin::AskForLoginCredentials()
+void DiamondAccountLogin::ProcessInput()
 {
-    menu.Log("Email: ");
-    std::string email;
-    std::cin >> email;
-
-    std::string pass = "";
-    menu.Log("Password: ");
-    std::cin >> pass;
+    std::string email = formData["email"].GetResponse<string>();
+    std::string pass = formData["pass"].GetResponse<string>();
 
     if(Login(email,pass)){
-        menu.Log("Login success");
-        menu.Hide();
-        menu.Pause();
+        Log("Login success");
+        Hide();
+        Pause();
         if(onLoginSuccess) onLoginSuccess(currentUser);
     }
 }

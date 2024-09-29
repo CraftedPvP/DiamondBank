@@ -3,10 +3,11 @@
 
 #include <string>
 #include "../Bank/IAccountLogin.h"
-#include "../Bank/BankFeature.h"
+#include "../Bank/BankFeature2.h"
+#include "../UI/Form.h"
 #include <functional>
 
-class DiamondAccountLogin : public IAccountLogin, public BankFeature{
+class DiamondAccountLogin : public IAccountLogin, public BankFeature2, public Form{
 // events
     using OnLoginSuccess = std::function<void(AccountInfo)>;
     OnLoginSuccess onLoginSuccess;
@@ -27,8 +28,11 @@ public:
     AccountInfo GetUser() override;
     bool Login(std::string email, std::string pass) override;
     bool IsLoggedIn() override;
-    void OnChoose(int choice) override;
     void Logout() override;
+
+    void Initialize() override;
+    void Content() override;
+    void ProcessInput() override;
 };
 
 #endif

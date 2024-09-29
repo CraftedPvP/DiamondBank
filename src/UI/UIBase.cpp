@@ -5,6 +5,7 @@
 
 using std::cin;
 using std::cout;
+using std::cerr;
 using std::endl;
 void UIBase::DisplayBanner()
 {
@@ -45,4 +46,9 @@ void UIBase::ClearInput()
         cin.clear();
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
+}
+void UIBase::Log(std::string content, bool isError)
+{
+    if(isError) cerr << "Error: " << content << endl;
+    else cout << content << endl;
 }

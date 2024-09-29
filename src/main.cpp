@@ -11,6 +11,6 @@ void TestForm(){
     form.Show();
 }
 int main(){
-    // LaunchDiamondBank();
-    TestForm();
+    LaunchDiamondBank();
+    // TestForm();
 }

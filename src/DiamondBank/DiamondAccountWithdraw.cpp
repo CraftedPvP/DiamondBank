@@ -4,14 +4,7 @@
 
 DiamondAccountWithdraw::DiamondAccountWithdraw()
 {
-    menu.name = "Diamond Account Withdraw";
-    std::string actions[] = {
-        "Withdraw",
-        "Go back"
-    };
-    int size = sizeof(actions)/sizeof(actions[0]);
-    menu.SetActions(actions,size);
-    menu.SetChooseCallback(std::bind(&DiamondAccountWithdraw::OnChoose,this,std::placeholders::_1));
+    name = "Diamond Account Withdraw";
 }
 
 void DiamondAccountWithdraw::SetTransactionFee(float transactionFee)
@@ -22,7 +15,7 @@ void DiamondAccountWithdraw::SetTransactionFee(float transactionFee)
 bool DiamondAccountWithdraw::CheckIfCanWithdraw(float toWidthraw)
 {
     if(!GetBank()->GetAccountLogin()->IsLoggedIn()){
-        menu.Log("You have to be signed in to do this action", true);
+        Log("You have to be signed in to do this action", true);
         return false;
     }
     
@@ -30,7 +23,7 @@ bool DiamondAccountWithdraw::CheckIfCanWithdraw(float toWidthraw)
     float amountStored = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
     if(amountStored < toWidthraw){
         float missing = std::abs(amountStored - toWidthraw);
-        menu.Log("You lack funds to withdraw " + TextHelper::FixedFloat(toWidthraw) + " diamond(s). You still need " + TextHelper::FixedFloat(missing) + " diamond(s).", true);
+        Log("You lack funds to withdraw " + TextHelper::FixedFloat(toWidthraw) + " diamond(s). You still need " + TextHelper::FixedFloat(missing) + " diamond(s).", true);
         return false;
     }
 
@@ -46,31 +39,36 @@ bool DiamondAccountWithdraw::Withdraw(float toWidthraw)
     return GetBank()->GetAccountDatabase()->AddMoney(user.Email, -toWidthraw);
 }
 
-void DiamondAccountWithdraw::OnChoose(int choice)
+void DiamondAccountWithdraw::Initialize()
 {
-    if(choice == 1){
-        AskForInput();
-    }
+    FormQuestion question;
+    question.Set<float>("How much would you withdraw",0.f);
+    formData.emplace("withdraw",question);
 }
 
-void DiamondAccountWithdraw::AskForInput()
+void DiamondAccountWithdraw::Content()
 {
     AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
     float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-    menu.Log("You currently have " + TextHelper::FixedFloat(diamonds) + " diamond(s).");
-    menu.Log("How much would you withdraw?");
+    Log("You currently have " + TextHelper::FixedFloat(diamonds) + " diamond(s).");
+}
 
-    float toWithdraw = 0;
+void DiamondAccountWithdraw::ProcessInput()
+{
+    float toWithdraw = formData["withdraw"].GetResponse<float>();
     std::cin >> toWithdraw;
     
-    if(toWithdraw < 0) { menu.Log("Invalid input", true); return; }
+    if(toWithdraw < 0) { Log("Invalid input", true); return; }
 
     if(Withdraw(toWithdraw)){
-        menu.Log("You withdrew " + TextHelper::FixedFloat(toWithdraw) + " diamond(s).");
-        diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-        menu.Log("You now have a total of " + TextHelper::FixedFloat(diamonds) + " diamond(s) left in the bank.");
+        Log("You withdrew " + TextHelper::FixedFloat(toWithdraw) + " diamond(s).");
+        AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
+        float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
+        Log("You now have a total of " + TextHelper::FixedFloat(diamonds) + " diamond(s) left in the bank.");
     }
     else{
-        menu.Log("Unable to withdraw at this time. Try again later.",true);
+        Log("Unable to withdraw at this time. Try again later.",true);
     }
+    Hide();
+    Pause();
 }
