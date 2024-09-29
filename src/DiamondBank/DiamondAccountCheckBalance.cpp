@@ -4,7 +4,7 @@
 
 DiamondAccountCheckBalance::DiamondAccountCheckBalance()
 {
-    name = "Diamond Account Balance";
+    name = "Diamond Bank > Account Creation";
 }
 
 void DiamondAccountCheckBalance::Content()
@@ -25,5 +25,5 @@ void DiamondAccountCheckBalance::ShowBalance()
     }
     AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
     float amountStored = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-    Log("You have " + TextHelper::FixedFloat(amountStored) + " diamond(s).");
+    Log("You have " + TextHelper::FixedFloat(amountStored) + " diamond(s) in your account.");
 }

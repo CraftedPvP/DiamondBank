@@ -26,6 +26,7 @@ protected:
     IAccountDeposit* accountDeposit;
     IAccountWithdraw* accountWithdraw;
     IAccountClose* accountClose;
+
 public:
     ~Bank();
     virtual void Initialize() = 0;
@@ -38,6 +39,8 @@ public:
     IAccountDeposit* GetAccountDeposit() { return accountDeposit;}
     IAccountWithdraw* GetAccountWithdraw() { return accountWithdraw;}
     IAccountClose* GetAccountClose() { return accountClose;}
+
+    virtual std::string GetSectionBanner(std::string section);
 };
 
 #endif

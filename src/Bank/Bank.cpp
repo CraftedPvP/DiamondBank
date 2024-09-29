@@ -1,10 +1,4 @@
 #include "Bank.h"
-#include <iostream>
-
-using std::cout;
-using std::endl;
-using std::cin;
-using std::cerr;
 
 Bank::~Bank()
 {
@@ -15,4 +9,12 @@ Bank::~Bank()
     delete accountDeposit;
     delete accountWithdraw;
     delete accountClose;
+}
+
+std::string Bank::GetSectionBanner(std::string section)
+{
+    std::string content = "Bank";
+    if(section.length() > 0) content +=" > "+ section;
+    content += "\nYou are currently signed in as \"" + accountLogin->GetUser().Name + "\"";
+    return content;
 }

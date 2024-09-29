@@ -8,12 +8,14 @@ using std::endl;
 
 DiamondAccountClose::DiamondAccountClose()
 {
-    name = "Diamond Account Closing";
+    name = "Diamond Bank > Account Closing";
 }
 
 void DiamondAccountClose::Initialize()
 {
     ClearFormData();
+    
+    name = GetBank()->GetSectionBanner("Account Closing");
 
     FormQuestion question;
     std::string email = GetBank()->GetAccountLogin()->GetUser().Email;
@@ -55,6 +57,7 @@ bool DiamondAccountClose::Close()
     bool success = GetBank()->GetAccountDatabase()->DeleteAccount(email);
     if(success && onAccountCloseSuccess) {
         Log("Your diamond bank account has been closed");
+        Log("All remaining account balance has been donated to the bank. Mwuahahaha.");
         onAccountCloseSuccess();
     }
     else Log("Unable to close your diamond bank account at this time", true);

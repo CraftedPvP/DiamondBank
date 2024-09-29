@@ -125,17 +125,25 @@ void DiamondBank::OnLoginSuccess_Event(AccountInfo user)
     ((DiamondAccountWithdraw*)accountWithdraw)->Initialize();
     ((DiamondAccountClose*)accountClose)->Initialize();
 
-    signedIn.name = "Diamond Bank Homepage\nYou are signed in as ";
-    signedIn.name += GetAccountLogin()->GetUser().Name;
+    signedIn.name = GetSectionBanner("Homepage");
 
     login.Hide();
 }
 
 void DiamondBank::OnAccountCloseSuccess_Event()
 {
+    accountLogin->Logout();
     signedIn.Hide();
 }
 void DiamondBank::OnLogoutSuccess_Event()
 {
     signedIn.Hide();
+}
+
+std::string DiamondBank::GetSectionBanner(std::string section)
+{
+    std::string content = "Diamond Bank";
+    if(section.length() > 0) content +=" > "+ section;
+    content += "\nYou are currently signed in as \"" + accountLogin->GetUser().Name + "\"";
+    return content;
 }

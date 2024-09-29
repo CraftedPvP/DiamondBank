@@ -3,7 +3,7 @@
 #include <iostream>
 DiamondAccountCreate::DiamondAccountCreate()
 {
-    name = "Diamond Account Create form";
+    name = "Diamond Bank > Account Creation";
 }
 
 void DiamondAccountCreate::Initialize()

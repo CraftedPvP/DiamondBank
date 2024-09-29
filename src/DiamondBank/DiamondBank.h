@@ -21,11 +21,13 @@ class DiamondBank : Bank{
     void OnLoginSuccess_Event(AccountInfo user);
     void OnAccountCloseSuccess_Event();
     void OnLogoutSuccess_Event();
+
 public:
     DiamondBank();
     void Initialize() override;
     /* Main loop */
     void LaunchUI() override;
+    std::string GetSectionBanner(std::string section) override;
 };
 
 #endif

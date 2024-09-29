@@ -3,7 +3,7 @@
 
 DiamondAccountLogin::DiamondAccountLogin()
 {
-    name = "Diamond Account Login";
+    name = "Diamond Bank > Account Login";
 }
 
 DiamondAccountLogin::~DiamondAccountLogin()

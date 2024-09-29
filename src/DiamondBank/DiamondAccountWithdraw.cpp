@@ -4,7 +4,7 @@
 
 DiamondAccountWithdraw::DiamondAccountWithdraw()
 {
-    name = "Diamond Account Withdraw";
+    name = "Diamond Bank > Account Withdrawal";
 }
 
 void DiamondAccountWithdraw::SetTransactionFee(float transactionFee)
@@ -42,6 +42,8 @@ bool DiamondAccountWithdraw::Withdraw(float toWidthraw)
 void DiamondAccountWithdraw::Initialize()
 {
     ClearFormData();
+    
+    name = GetBank()->GetSectionBanner("Account Withdrawal");
 
     FormQuestion question;
     question.Set<float>("How much would you want to withdraw",0.f);

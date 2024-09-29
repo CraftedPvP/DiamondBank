@@ -5,12 +5,14 @@
 
 DiamondAccountDeposit::DiamondAccountDeposit()
 {
-    name = "Diamond Account Deposit";
+    name = "Diamond Bank > Account Deposit";
 }
 
 void DiamondAccountDeposit::Initialize()
 {
     ClearFormData();
+    
+    name = GetBank()->GetSectionBanner("Account Deposit");
 
     FormQuestion question;
     question.Set<float>("How much do you want to deposit",0.f);
