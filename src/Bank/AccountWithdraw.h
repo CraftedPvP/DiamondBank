@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * Interface for account withdrawal page
+ */
 class AccountWithdraw {
 protected:
     float transactionFee = .12f;

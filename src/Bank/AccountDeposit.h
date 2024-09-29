@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * Interface for depositing money
+ */
 class AccountDeposit {
 protected:
     float transactionFee = .12f;

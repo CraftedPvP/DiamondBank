@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * Account user details
+ */
 struct AccountInfo {
 public:
     AccountInfo():Email(""),Name(""),Money(0){}

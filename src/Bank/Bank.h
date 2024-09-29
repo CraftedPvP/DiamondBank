@@ -12,6 +12,9 @@ using std::string;
 #include "AccountWithdraw.h"
 #include "AccountClose.h"
 
+/**
+ * Base bank class
+ */
 class Bank{
 protected:
     string name = "Bank Name";

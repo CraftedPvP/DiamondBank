@@ -1,5 +1,5 @@
 #include "Menu.h"
-
+#include <stdlib.h>
 #include <iostream>
 
 using std::cout;
@@ -29,6 +29,7 @@ void Menu::Show()
     choice = 0;
     keepShowing = true;
     do{
+        system("cls");
         DisplayBanner();
 
         for (size_t i = 1; i < actions.size()+1; i++)
@@ -43,10 +44,12 @@ void Menu::Show()
         }
         else if(choice > actions.size() || choice <= 0){
             Log("Invalid input", true);
+            system("pause");
             continue;
         }
         if (onChoose) onChoose(choice);
         else Log("OnChoose Callback not set for " + name, true);
+        system("pause");
     }
     while(true);
 }

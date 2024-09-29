@@ -22,10 +22,7 @@ DiamondAccountLogin::~DiamondAccountLogin()
     currentUser.Name = "aaa";
 }
 
-AccountInfo DiamondAccountLogin::GetUser()
-{
-    return currentUser;
-}
+AccountInfo DiamondAccountLogin::GetUser() { return currentUser; }
 
 bool DiamondAccountLogin::Login(std::string email, std::string pass)
 {
@@ -38,10 +35,7 @@ bool DiamondAccountLogin::Login(std::string email, std::string pass)
     return IsLoggedIn();
 }
 
-bool DiamondAccountLogin::IsLoggedIn()
-{
-    return currentUser.Email != "";
-}
+bool DiamondAccountLogin::IsLoggedIn() { return currentUser.Email != ""; }
 
 void DiamondAccountLogin::OnChoose(int choice)
 {
@@ -60,4 +54,5 @@ void DiamondAccountLogin::AskForLoginCredentials()
     menu.Log("Password: ");
     std::cin >> pass;
 
+    Login(email,pass);
 }

@@ -8,15 +8,17 @@ using std::string;
 #include "../UI/Menu.h"
 
 class DiamondBank : Bank{
+    /* UI for non-signed in users */
     Menu login;
+    /* UI for signed in users */
     Menu signedIn;
 
     void OnChoose_Login(int choice);
     void OnChoose_SignedIn(int choice);
 public:
     DiamondBank();
-    ~DiamondBank();
     void Initialize() override;
+    /* Main loop */
     void LaunchUI() override;
 };
 

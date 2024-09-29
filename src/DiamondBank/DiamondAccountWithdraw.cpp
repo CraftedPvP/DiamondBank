@@ -1,4 +1,5 @@
 #include "DiamondAccountWithdraw.h"
+#include <iostream>
 
 DiamondAccountWithdraw::DiamondAccountWithdraw()
 {
@@ -32,10 +33,38 @@ bool DiamondAccountWithdraw::CheckIfCanWithdraw(float toWidthraw)
 
 bool DiamondAccountWithdraw::Withdraw(float toWidthraw)
 {
-
-    return true;
+    if(!CheckIfCanWithdraw(toWidthraw)) return false;
+    
+    AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
+    float amountStored = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
+    return GetBank()->GetAccountDatabase()->AddMoney(user.Email, -toWidthraw);
 }
 
 void DiamondAccountWithdraw::OnChoose(int choice)
 {
+    if(choice == 1){
+        AskForInput();
+    }
+}
+
+void DiamondAccountWithdraw::AskForInput()
+{
+    AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
+    float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
+    menu.Log("You currently have " + std::to_string(diamonds) + " diamond(s).");
+    menu.Log("How much would you withdraw?");
+
+    float toWithdraw = 0;
+    std::cin >> toWithdraw;
+    
+    if(toWithdraw < 0) { menu.Log("Invalid input", true); return; }
+
+    if(Withdraw(toWithdraw)){
+        menu.Log("You withdrew " + std::to_string(toWithdraw) + " diamond(s).");
+        diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
+        menu.Log("You now have a total of " + std::to_string(diamonds) + " diamond(s) left in the bank.");
+    }
+    else{
+        menu.Log("Unable to withdraw at this time. Try again later.",true);
+    }
 }

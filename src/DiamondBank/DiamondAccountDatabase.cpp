@@ -142,14 +142,14 @@ bool DiamondAccountDatabase::CreateAccount(AccountInfo user, string pass)
 
 float DiamondAccountDatabase::GetMoney(string email) { return GetAccount(email).Money; }
 
-void DiamondAccountDatabase::AddMoney(string email, float amount)
+bool DiamondAccountDatabase::AddMoney(string email, float amount)
 {
     MakeDatabaseBackup();
     ifstream inputFile (databaseCopyUrl);
     ofstream outputFile (databaseUrl);
     if (!outputFile.is_open() || !inputFile.is_open()){
         cerr << "Unable to connect to the database" << endl;
-        return;
+        return false;
     }
 
     string line;
@@ -179,19 +179,23 @@ void DiamondAccountDatabase::AddMoney(string email, float amount)
     inputFile.close();
     outputFile.close();
 
-    if(!foundUser){
-        cerr << "Unable to add money to user" << endl;
-    }
+    if(!foundUser) cerr << "Unable to add money to user" << endl;
+    return foundUser;
 }
 
-void DiamondAccountDatabase::DeleteAccount(string email)
+bool DiamondAccountDatabase::DeleteAccount(string email)
 {
+    if(!CheckIfUserExists(email)){
+        cerr << "Unable to delete. User is not found" << endl;
+        return false;
+    }
+
     MakeDatabaseBackup();
     ifstream inputFile (databaseCopyUrl);
     ofstream outputFile (databaseUrl);
     if (!outputFile.is_open() || !inputFile.is_open()){
         cerr << "Unable to connect to the database" << endl;
-        return;
+        return false;
     }
 
     string line;
@@ -211,4 +215,6 @@ void DiamondAccountDatabase::DeleteAccount(string email)
 
     inputFile.close();
     outputFile.close();
+    cout << "User is deleted" << endl;
+    return true;
 }

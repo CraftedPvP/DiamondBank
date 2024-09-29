@@ -18,11 +18,11 @@ public:
     virtual AccountInfo GetAccount(string email) = 0;
     
     virtual bool CreateAccount(AccountInfo user, string pass) = 0;
-    virtual void DeleteAccount(string email) = 0;
+    virtual bool DeleteAccount(string email) = 0;
     virtual AccountInfo Login(string email, string pass) = 0;
 
     virtual float GetMoney(string email) = 0;
-    virtual void AddMoney(string email, float amount) = 0;
+    virtual bool AddMoney(string email, float amount) = 0;
 };
 
 #endif

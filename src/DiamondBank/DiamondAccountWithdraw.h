@@ -6,6 +6,7 @@
 #include "../Bank/BankFeature.h"
 
 class DiamondAccountWithdraw : public AccountWithdraw, public BankFeature{
+    void AskForInput();
 public:
     DiamondAccountWithdraw();
     void SetTransactionFee(float transactionFee) override;

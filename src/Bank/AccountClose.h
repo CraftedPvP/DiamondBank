@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * Interface for account termination or deletion
+ */
 class AccountClose {
 public:
     virtual bool Close() = 0;

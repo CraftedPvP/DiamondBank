@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * Interface for checking account balance
+ */
 class AccountCheckBalance {
 public:
     AccountCheckBalance();

@@ -20,16 +20,6 @@ DiamondBank::DiamondBank()
     accountClose = new DiamondAccountClose();
 }
 
-DiamondBank::~DiamondBank()
-{
-    delete accountDatabase;
-    delete accountCreate;
-    delete accountLogin;
-    delete accountCheckBalance;
-    delete accountDeposit;
-    delete accountWithdraw;
-    delete accountClose;
-}
 void DiamondBank::Initialize(){
     ((DiamondAccountCreate*)accountCreate)->SetBank(this);
     ((DiamondAccountLogin*)accountLogin)->SetBank(this);
@@ -62,7 +52,13 @@ void DiamondBank::Initialize(){
 }
 void DiamondBank::LaunchUI()
 {
-    login.Show();
+    bool justQuit = true;
+    do{
+        login.Show();
+        justQuit = !accountLogin->IsLoggedIn(); 
+        if(accountLogin->IsLoggedIn()) signedIn.Show();
+    }
+    while(justQuit);
 }
 
 void DiamondBank::OnChoose_Login(int choice)

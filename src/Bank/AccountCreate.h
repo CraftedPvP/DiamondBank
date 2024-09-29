@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * Interface for account registration
+ */
 class AccountCreate {
 public:
     virtual bool CheckIfExisting(std::string email) = 0;

@@ -31,10 +31,10 @@ public:
     
     AccountInfo Login(string email, string pass) override;
     bool CreateAccount(AccountInfo user, string pass) override;
-    void DeleteAccount(string email) override;
+    bool DeleteAccount(string email) override;
 
     float GetMoney(string email) override;
-    void AddMoney(string email, float amount) override;
+    bool AddMoney(string email, float amount) override;
 };
 
 #endif

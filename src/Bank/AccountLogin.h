@@ -4,6 +4,9 @@
 #include <string>
 #include "AccountInfo.h"
 
+/**
+ * Interface for account login page
+ */
 class AccountLogin {
 public:
     AccountLogin();
