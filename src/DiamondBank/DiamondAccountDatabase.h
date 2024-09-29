@@ -4,11 +4,11 @@
 #include <string>
 #include <vector>
 
-#include "../Bank/AccountDatabase.h"
+#include "../Bank/IAccountDatabase.h"
 using std::string;
 using std::vector;
 
-class DiamondAccountDatabase : public AccountDatabase {
+class DiamondAccountDatabase : public IAccountDatabase {
     // used to separate between the data found in our local database
     char delimiter;
     

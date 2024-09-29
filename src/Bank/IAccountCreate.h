@@ -6,7 +6,7 @@
 /**
  * Interface for account registration
  */
-class AccountCreate {
+class IAccountCreate {
 public:
     virtual bool CheckIfExisting(std::string email) = 0;
     virtual bool CheckIfValidPassword(std::string pass, std::string confirmPass) = 0;

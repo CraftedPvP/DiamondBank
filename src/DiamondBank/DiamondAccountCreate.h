@@ -4,7 +4,7 @@
 #include <string>
 #include "../Bank/BankFeature.h"
 
-class DiamondAccountCreate : public AccountCreate, public BankFeature{
+class DiamondAccountCreate : public IAccountCreate, public BankFeature{
     void AskForNewCredentials();
 public:
     DiamondAccountCreate();

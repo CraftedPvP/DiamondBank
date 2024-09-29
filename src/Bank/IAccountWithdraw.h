@@ -6,7 +6,7 @@
 /**
  * Interface for account withdrawal page
  */
-class AccountWithdraw {
+class IAccountWithdraw {
 protected:
     float transactionFee = .12f;
 public:

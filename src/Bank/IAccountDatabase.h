@@ -6,7 +6,7 @@ using std::string;
 
 #include "AccountInfo.h"
 
-class AccountDatabase {
+class IAccountDatabase {
 public:
     // call this at app start up
     virtual bool CanConnect() = 0;

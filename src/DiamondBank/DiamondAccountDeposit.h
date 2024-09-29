@@ -2,10 +2,10 @@
 #define DIAMONDACCOUNTDEPOSIT_H
 
 #include <string>
-#include "../Bank/AccountDeposit.h"
+#include "../Bank/IAccountDeposit.h"
 #include "../Bank/BankFeature.h"
 
-class DiamondAccountDeposit : public AccountDeposit, public BankFeature{
+class DiamondAccountDeposit : public IAccountDeposit, public BankFeature{
     void AskForInput();
 public:
     DiamondAccountDeposit();

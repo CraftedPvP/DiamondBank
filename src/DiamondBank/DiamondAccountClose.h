@@ -2,11 +2,11 @@
 #define DIAMONDACCOUNTCLOSE_H
 
 #include <string>
-#include "../Bank/AccountClose.h"
+#include "../Bank/IAccountClose.h"
 #include "../Bank/BankFeature.h"
 #include <functional>
 
-class DiamondAccountClose : public AccountClose, public BankFeature{
+class DiamondAccountClose : public IAccountClose, public BankFeature{
 // events
     using OnAccountCloseSuccess = std::function<void()>;
     OnAccountCloseSuccess onAccountCloseSuccess;

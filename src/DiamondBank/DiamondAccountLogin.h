@@ -2,11 +2,11 @@
 #define DIAMONDACCOUNTLOGIN_H
 
 #include <string>
-#include "../Bank/AccountLogin.h"
+#include "../Bank/IAccountLogin.h"
 #include "../Bank/BankFeature.h"
 #include <functional>
 
-class DiamondAccountLogin : public AccountLogin, public BankFeature{
+class DiamondAccountLogin : public IAccountLogin, public BankFeature{
 // events
     using OnLoginSuccess = std::function<void(AccountInfo)>;
     OnLoginSuccess onLoginSuccess;

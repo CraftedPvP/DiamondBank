@@ -2,10 +2,10 @@
 #define DIAMONDACCOUNTCHECKBALANCE_H
 
 #include <string>
-#include "../Bank/AccountCheckBalance.h"
+#include "../Bank/IAccountCheckBalance.h"
 #include "../Bank/BankFeature.h"
 
-class DiamondAccountCheckBalance : public AccountCheckBalance, public BankFeature{
+class DiamondAccountCheckBalance : public IAccountCheckBalance, public BankFeature{
 public:
     DiamondAccountCheckBalance();
     void ShowBalance() override;

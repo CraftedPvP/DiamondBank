@@ -36,3 +36,4 @@ obj/
 build/
 database.txt
 database.txtcopy
+*.zip

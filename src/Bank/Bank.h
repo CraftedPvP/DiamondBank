@@ -4,13 +4,13 @@
 #include <string>
 using std::string;
 
-#include "AccountDatabase.h"
-#include "AccountCreate.h"
-#include "AccountLogin.h"
-#include "AccountCheckBalance.h"
-#include "AccountDeposit.h"
-#include "AccountWithdraw.h"
-#include "AccountClose.h"
+#include "IAccountDatabase.h"
+#include "IAccountCreate.h"
+#include "IAccountLogin.h"
+#include "IAccountCheckBalance.h"
+#include "IAccountDeposit.h"
+#include "IAccountWithdraw.h"
+#include "IAccountClose.h"
 
 /**
  * Base bank class
@@ -19,25 +19,25 @@ class Bank{
 protected:
     string name = "Bank Name";
 
-    AccountDatabase* accountDatabase;
-    AccountCreate* accountCreate;
-    AccountLogin* accountLogin;
-    AccountCheckBalance* accountCheckBalance;
-    AccountDeposit* accountDeposit;
-    AccountWithdraw* accountWithdraw;
-    AccountClose* accountClose;
+    IAccountDatabase* accountDatabase;
+    IAccountCreate* accountCreate;
+    IAccountLogin* accountLogin;
+    IAccountCheckBalance* accountCheckBalance;
+    IAccountDeposit* accountDeposit;
+    IAccountWithdraw* accountWithdraw;
+    IAccountClose* accountClose;
 public:
     ~Bank();
     virtual void Initialize() = 0;
     virtual void LaunchUI() = 0;
 
-    AccountDatabase* GetAccountDatabase() { return accountDatabase;}
-    AccountCreate* GetAccountCreate() { return accountCreate;}
-    AccountLogin* GetAccountLogin() { return accountLogin;}
-    AccountCheckBalance* GetAccountCheckBalance() { return accountCheckBalance;}
-    AccountDeposit* GetAccountDeposit() { return accountDeposit;}
-    AccountWithdraw* GetAccountWithdraw() { return accountWithdraw;}
-    AccountClose* GetAccountClose() { return accountClose;}
+    IAccountDatabase* GetAccountDatabase() { return accountDatabase;}
+    IAccountCreate* GetAccountCreate() { return accountCreate;}
+    IAccountLogin* GetAccountLogin() { return accountLogin;}
+    IAccountCheckBalance* GetAccountCheckBalance() { return accountCheckBalance;}
+    IAccountDeposit* GetAccountDeposit() { return accountDeposit;}
+    IAccountWithdraw* GetAccountWithdraw() { return accountWithdraw;}
+    IAccountClose* GetAccountClose() { return accountClose;}
 };
 
 #endif

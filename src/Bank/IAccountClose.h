@@ -6,7 +6,7 @@
 /**
  * Interface for account termination or deletion
  */
-class AccountClose {
+class IAccountClose {
 public:
     virtual bool Close() = 0;
 };

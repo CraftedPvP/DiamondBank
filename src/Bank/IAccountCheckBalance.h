@@ -6,7 +6,7 @@
 /**
  * Interface for checking account balance
  */
-class AccountCheckBalance {
+class IAccountCheckBalance {
 public:
     virtual void ShowBalance() = 0;
 };

@@ -7,7 +7,7 @@
 /**
  * Interface for account login page
  */
-class AccountLogin {
+class IAccountLogin {
 public:
     virtual AccountInfo GetUser() = 0;
     virtual bool Login(std::string email, std::string pass) = 0;

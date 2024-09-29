@@ -2,10 +2,10 @@
 #define DIAMONDACCOUNTWITHDRAW_H
 
 #include <string>
-#include "../Bank/AccountWithdraw.h"
+#include "../Bank/IAccountWithdraw.h"
 #include "../Bank/BankFeature.h"
 
-class DiamondAccountWithdraw : public AccountWithdraw, public BankFeature{
+class DiamondAccountWithdraw : public IAccountWithdraw, public BankFeature{
     void AskForInput();
 public:
     DiamondAccountWithdraw();

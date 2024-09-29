@@ -6,7 +6,7 @@
 /**
  * Interface for depositing money
  */
-class AccountDeposit {
+class IAccountDeposit {
 protected:
     float transactionFee = .12f;
 public:
