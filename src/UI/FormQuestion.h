@@ -4,15 +4,20 @@
 #include <iostream>
 #include <string>
 #include <variant>
+#include <vector>
+#include "../InputValidation/InputValidationVariant.h"
 #include <stdexcept>
 
 class FormQuestion{
     std::string question;
     std::variant<int,float,std::string> response;
 
-    bool IsInvalidInput();
+    std::vector<IValidation*> validationRules;
+
+    bool IsInvalidInput(std::variant<int,float,std::string> tempInput);
 
     public:
+    void AddValidationRule(IValidation* validation);
     std::string GetQuestion();
 
     template <typename T>
@@ -30,5 +35,8 @@ class FormQuestion{
     std::string GetType();
     void GetInput();
     void PrintResponse();
+    void ClearValidationRules();
+    void ClearInput();
+    ~FormQuestion();
 };
 #endif

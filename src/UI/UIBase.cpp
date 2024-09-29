@@ -23,7 +23,7 @@ void UIBase::Show()
         DisplayBanner();
         Content();
 
-        AskForInput();
+        ProcessInput();
 
         if(keepShowing) Pause();
     }
@@ -32,7 +32,7 @@ void UIBase::Show()
 
 void UIBase::Hide() { keepShowing = false; }
 
-void UIBase::AskForInput()
+void UIBase::ProcessInput()
 {
     // ask input here
     // you can set keepShowing false in this section

@@ -2,22 +2,40 @@
 #include <iostream>
 #include <limits> // to invalidate/clear the console input
 
-bool FormQuestion::IsInvalidInput()
+bool FormQuestion::IsInvalidInput(std::variant<int,float,std::string> tempInput)
 {
+    // use C++ input validation
     if (std::cin.fail()) {
         std::cerr << std::endl << "Error: Invalid input" << std::endl; 
-        std::cin.clear();
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        ClearInput();
         std::cout << question << "\t";
         return true;
     }
+    try{
+        // use custom validation rules
+        for(auto& v : validationRules){
+            if(!v->IsValid(tempInput)) 
+            {
+                ClearInput();
+                std::cerr << std::endl << "Error: " << v->GetErrorMessage() << std::endl; 
+                std::cout << question << "\t";
+                return true;
+            }
+        }
+    }
+    catch(std::exception e){
+        std::cerr << std::endl << "Error: " << e.what() << std::endl; 
+    }
     // when entering a float value in int input, the integer gets sliced from the cin. then the float value bleeds into the next cin.
     // this behaviour is unwanted; hence, we clear it here. there's no side effect if there's nothing to clear and if it's just 100 chars to clear.
-    std::cin.clear();
-    std::cin.ignore(100, '\n');
+    // std::cin.clear();
+    // std::cin.ignore(100, '\n');
+    ClearInput();
+
     return false;
 }
-std::string FormQuestion::GetQuestion() {return question;}
+void FormQuestion::AddValidationRule(IValidation* validation) { validationRules.push_back(validation); }
+std::string FormQuestion::GetQuestion() { return question; }
 
 std::string FormQuestion::GetType(){
     if(std::holds_alternative<int>(response)) return "int";
@@ -29,24 +47,33 @@ std::string FormQuestion::GetType(){
 }
 void FormQuestion::GetInput(){
     std::string type = GetType();
+    std::variant<int,float,std::string> tempInput;
     if(type == "string"){
-        std::cin >> type;
-        response = type;
+        std::string text;
+        int num = 0;
+        do{
+            std::cin >> text;
+            tempInput = text;
+        }
+        while(IsInvalidInput(tempInput));
+        response = text;
     }
     else if(type == "int"){
         int num = 0;
         do{
             std::cin >> num;
+            tempInput = num;
         }
-        while(IsInvalidInput());
+        while(IsInvalidInput(tempInput));
         response = num;
     }
     else if(type == "float"){
         float num = 0;
         do{
             std::cin >> num;
+            tempInput = num;
         }
-        while(IsInvalidInput());
+        while(IsInvalidInput(tempInput));
         response = num;
     }
     else{
@@ -59,4 +86,24 @@ void FormQuestion::PrintResponse()
     std::visit([](auto&& arg){
         std::cout << arg;
     },response);
+}
+
+FormQuestion::~FormQuestion()
+{
+    ClearValidationRules();
+}
+
+void FormQuestion::ClearInput()
+{
+    std::cin.clear();
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+}
+
+void FormQuestion::ClearValidationRules()
+{
+    std::cout << "Cleared"<<std::endl;
+    for(auto& validation : validationRules){
+        delete validation;
+    }
+    validationRules.clear();
 }

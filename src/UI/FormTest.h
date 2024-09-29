@@ -7,6 +7,7 @@
  * Used to access other bank features for verification or whatever
  */
 class FormTest : public Form {
+    FormQuestion question;
 public:
     /**
      * Set the form data here

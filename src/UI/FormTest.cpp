@@ -1,5 +1,6 @@
 #include "FormTest.h"
 #include <iostream>
+#include "../InputValidation/InputValidationNumber.h"
 
 using std::cout;
 using std::cin;
@@ -8,7 +9,6 @@ using std::endl;
 
 void FormTest::Initialize()
 {
-    FormQuestion question;
     question.Set<std::string>("Are you a hotdog","");
     formData.emplace("1",question);
 
@@ -16,6 +16,7 @@ void FormTest::Initialize()
     formData.emplace("2",question);
 
     question.Set<float>("how much are you",0.f);
+    question.AddValidationRule(new InputValidationNumber());
     formData.emplace("3",question);
 }
 void FormTest::Content()
