@@ -51,6 +51,13 @@ void DiamondAccountWithdraw::Content()
     AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
     float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
     Log("You currently have " + TextHelper::FixedFloat(diamonds) + " diamond(s).");
+
+    int num = 1;
+    for(auto& kv : formData){
+        cout << num << ". " << kv.second.GetQuestion() << ":\t";
+        kv.second.GetInput();
+        num++;
+    }
 }
 
 void DiamondAccountWithdraw::ProcessInput()
@@ -70,5 +77,4 @@ void DiamondAccountWithdraw::ProcessInput()
         Log("Unable to withdraw at this time. Try again later.",true);
     }
     Hide();
-    Pause();
 }

@@ -23,7 +23,13 @@ public:
      */
     void Hide() override;
 
+    /**
+     * Show description / form here
+     */
     virtual void Content() = 0;
+    /**
+     * Decide to Hide here
+     */
     virtual void ProcessInput();
     
     void Pause();

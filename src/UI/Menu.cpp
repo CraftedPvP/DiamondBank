@@ -20,10 +20,7 @@ void Menu::SetActions(const std::string actionsToSet[], int numOfActions)
         actions.push_back(actionsToSet[i]);
 }
 
-void Menu::SetChooseCallback(ChooseCallback callback)
-{
-    onChoose = callback;
-}
+void Menu::SetChooseCallback(ChooseCallback callback) { onChoose = callback; }
 
 void Menu::Show()
 {
@@ -64,13 +61,8 @@ void Menu::Show()
 }
 
 void Menu::Hide() { keepShowing = false; }
-
 int Menu::GetChoice() { return choice; }
-
-void Menu::Pause()
-{
-    system("pause");
-}
+void Menu::Pause() { system("pause"); }
 
 void Menu::ClearInput()
 {

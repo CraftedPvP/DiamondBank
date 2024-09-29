@@ -30,6 +30,12 @@ void DiamondBank::Initialize(){
     ((DiamondAccountWithdraw*)accountWithdraw)->SetBank(this);
     ((DiamondAccountClose*)accountClose)->SetBank(this);
 
+    ((DiamondAccountCreate*)accountCreate)->Initialize();
+    ((DiamondAccountLogin*)accountLogin)->Initialize();
+    ((DiamondAccountDeposit*)accountDeposit)->Initialize();
+    ((DiamondAccountWithdraw*)accountWithdraw)->Initialize();
+    ((DiamondAccountClose*)accountClose)->Initialize();
+
     login.name = "Diamond Bank Login";
     std::string actions[] = {
         "Login",

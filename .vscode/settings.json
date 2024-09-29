@@ -60,5 +60,12 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "variant": "cpp"
-    }
+    },
+    "makefile.launchConfigurations": [
+        {
+            "cwd": "d:\\TR-ENGINELESS\\Module03\\build",
+            "binaryPath": "d:\\TR-ENGINELESS\\Module03\\build\\DiamondBank",
+            "binaryArgs": []
+        }
+    ]
 }

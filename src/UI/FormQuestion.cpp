@@ -25,13 +25,9 @@ bool FormQuestion::IsInvalidInput(std::variant<int,float,std::string> tempInput)
     }
     catch(std::exception e){
         std::cerr << std::endl << "Error: " << e.what() << std::endl; 
+        return true;
     }
-    // when entering a float value in int input, the integer gets sliced from the cin. then the float value bleeds into the next cin.
-    // this behaviour is unwanted; hence, we clear it here. there's no side effect if there's nothing to clear and if it's just 100 chars to clear.
-    // std::cin.clear();
-    // std::cin.ignore(100, '\n');
     ClearInput();
-
     return false;
 }
 std::vector<IValidation *> &FormQuestion::GetValidationRules() { return validationRules; }
@@ -95,10 +91,16 @@ void FormQuestion::ClearInput()
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }
 
-void FormQuestion::ClearValidationRules()
+void FormQuestion::ClearAndDeleteValidationRules()
 {// call this when the form is no longer needed. otherwise, using the rule pointer will crash in FormQuestion inside IsInvalidInput
     for(auto& validation : validationRules){
         delete validation;
     }
+    validationRules.clear();
+}
+
+
+void FormQuestion::ClearValidationRules()
+{// call this when we just want a fresh FormQuestion with no values in it
     validationRules.clear();
 }

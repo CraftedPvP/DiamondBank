@@ -19,12 +19,11 @@ void DiamondAccountCreate::Initialize()
     formData.emplace("pass",question);
 
     question.Set<std::string>("Confirm Password","");
-    formData.emplace("confirmPass",question);
+    formData.emplace("passConfirm",question);
 }
 void DiamondAccountCreate::Content(){
     int num = 1;
     for(auto& kv : formData){
-    cout << "Here" << endl;
         cout << num << ". " << kv.second.GetQuestion() << ":\t";
         kv.second.GetInput();
         num++;
@@ -36,9 +35,9 @@ bool DiamondAccountCreate::CheckIfExisting(std::string email)
     return GetBank()->GetAccountDatabase()->CheckIfUserExists(email);
 }
 
-bool DiamondAccountCreate::CheckIfValidPassword(std::string pass, std::string confirmPass)
+bool DiamondAccountCreate::CheckIfValidPassword(std::string pass, std::string passConfirm)
 {// add additional pass validation here
-    return pass == confirmPass && pass.length() > 0;
+    return pass == passConfirm && pass.length() > 0;
 }
 
 bool DiamondAccountCreate::Create(AccountInfo user, std::string pass)
@@ -59,11 +58,13 @@ void DiamondAccountCreate::ProcessInput()
 
     newUser.Name = formData["name"].GetResponse<string>();
 
-    std::string pass = "",confirmPass = "";
-    pass = formData["pass"].GetResponse<string>();
-    confirmPass = formData["confirmPass"].GetResponse<string>();
+    std::string pass = formData["pass"].GetResponse<string>();
+    std::string passConfirm = formData["passConfirm"].GetResponse<string>();
     
-    if(!CheckIfValidPassword(pass,confirmPass)){
+    // this is another validation on top of the FormQuestion validation.
+    // one limitation of the FormQuestion validation is that it can only check for its own value
+    // it cannot be used to check for another value together with its own value
+    if(!CheckIfValidPassword(pass,passConfirm)){
         Log("Invalid password or pass and confirm password is not the same. Try making it longer or same.",true);
         return;
     }

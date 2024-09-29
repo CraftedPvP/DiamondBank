@@ -62,5 +62,4 @@ void DiamondAccountDeposit::ProcessInput()
         Log("Unable to deposit at this time. Try again later.",true);
     }
     Hide();
-    Pause();
 }
