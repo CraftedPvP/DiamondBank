@@ -17,7 +17,7 @@ bool FormQuestion::IsInvalidInput(std::variant<int,float,std::string> tempInput)
             if(!v->IsValid(tempInput)) 
             {
                 ClearInput();
-                std::cerr << std::endl << "Error: " << v->GetErrorMessage() << std::endl; 
+                std::cerr << "Error: " << v->GetErrorMessage() << std::endl << std::endl; 
                 std::cout << question << "\t";
                 return true;
             }

@@ -1,5 +1,6 @@
 #include "DiamondAccountCreate.h"
 #include "../InputValidation/InputValidationPassword.h"
+#include "../InputValidation/InputValidationRegexEmail.h"
 #include <iostream>
 DiamondAccountCreate::DiamondAccountCreate()
 {
@@ -10,7 +11,10 @@ void DiamondAccountCreate::Initialize()
 {
     FormQuestion question;
     question.Set<std::string>("Email","");
+    question.AddValidationRule(new InputValidationRegexEmail());
     formData.emplace("email",question);
+    question.ClearValidationRules();
+
     question.Set<std::string>("Name","");
     formData.emplace("name",question);
 

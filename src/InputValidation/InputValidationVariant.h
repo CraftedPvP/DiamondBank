@@ -1,5 +1,5 @@
-#ifndef INPUTVALIDATION_H
-#define INPUTVALIDATION_H
+#ifndef INPUTVALIDATION_VARIANT_H
+#define INPUTVALIDATION_VARIANT_H
 
 #include <vector>
 #include <string>

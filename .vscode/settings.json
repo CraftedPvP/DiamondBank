@@ -59,7 +59,10 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "algorithm": "cpp",
+        "optional": "cpp",
+        "regex": "cpp"
     },
     "makefile.launchConfigurations": [
         {

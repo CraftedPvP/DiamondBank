@@ -1,5 +1,5 @@
-#ifndef VALIDATION_PASSWORD_H
-#define VALIDATION_PASSWORD_H
+#ifndef INPUTVALIDATION_PASSWORD_H
+#define INPUTVALIDATION_PASSWORD_H
 
 #include "InputValidationVariant.h"
 
