@@ -37,6 +37,4 @@ build/
 database.txt
 database.txtcopy
 *.zip
-
-CMake/*
-!CMake/CMakeLists.txt
+CMake/
