@@ -13,6 +13,7 @@ class FormQuestion{
     std::variant<int,float,std::string> response;
 
     std::vector<IValidation*> validationRules;
+    std::string hint;
 
     /**
      * Returns true if invalid input
@@ -38,6 +39,8 @@ class FormQuestion{
         this->question = question;
         this->response = value;
     }
+    void SetHint(std::string hint);
+    std::string GetHint();
 
     template<typename T>
     T GetResponse() {

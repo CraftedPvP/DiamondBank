@@ -22,55 +22,34 @@ void Menu::SetActions(const std::string actionsToSet[], int numOfActions)
 
 void Menu::SetChooseCallback(ChooseCallback callback) { onChoose = callback; }
 
-void Menu::Show()
+void Menu::Content()
+{
+    for (size_t i = 1; i < actions.size()+1; i++)
+        cout << "\t" << i << ". " << actions[i-1] << endl;
+
+    cout << "Action 1-" << actions.size() << ": ";
+}
+
+void Menu::ProcessInput()
 {
     choice = 0;
-    keepShowing = true;
-    do{
-        // clear screen
-        system("cls");
-        // clear input buffer
-        ClearInput();
-        // start of content
-        DisplayBanner();
+    cin >> choice;
 
-        for (size_t i = 1; i < actions.size()+1; i++)
-            cout << "\t" << i << ". " << actions[i-1] << endl;
-
-        cout << "Action 1-" << actions.size() << ": ";
-        cin >> choice;
-
-        if(choice > actions.size() || choice <= 0){
-            Log("Invalid input", true);
-            Pause();
-            continue;
-        }
-
-        if (onChoose) {
-            onChoose(choice);
-            if(choice == actions.size()){
-                Hide();
-                break;
-            }
-        }
-        else Log("OnChoose Callback not set for " + name, true);
-
-        if(keepShowing) Pause();
+    if(choice > actions.size() || choice <= 0){
+        Log("Invalid input", true);
+        return;
     }
-    while(keepShowing);
+
+    if (onChoose) {
+        onChoose(choice);
+        if(choice == actions.size()){
+            Hide();
+        }
+    }
+    else Log("OnChoose Callback not set for " + name, true);
 }
 
-void Menu::Hide() { keepShowing = false; }
 int Menu::GetChoice() { return choice; }
-void Menu::Pause() { system("pause"); }
-
-void Menu::ClearInput()
-{
-    if (cin.fail()) {
-        cin.clear();
-        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    }
-}
 void Menu::Log(std::string content, bool isError)
 {
     if(isError) cerr << "Error: " << content << endl;

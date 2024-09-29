@@ -32,6 +32,8 @@ bool FormQuestion::IsInvalidInput(std::variant<int,float,std::string> tempInput)
 }
 std::vector<IValidation *> &FormQuestion::GetValidationRules() { return validationRules; }
 void FormQuestion::AddValidationRule(IValidation *validation) { validationRules.push_back(validation); }
+void FormQuestion::SetHint(std::string hint){ this->hint = hint; }
+std::string FormQuestion::GetHint(){ return hint; }
 std::string FormQuestion::GetQuestion() { return question; }
 
 std::string FormQuestion::GetType(){
@@ -96,7 +98,7 @@ void FormQuestion::ClearAndDeleteValidationRules()
     for(auto& validation : validationRules){
         delete validation;
     }
-    validationRules.clear();
+    ClearValidationRules();
 }
 
 

@@ -41,8 +41,10 @@ bool DiamondAccountWithdraw::Withdraw(float toWidthraw)
 
 void DiamondAccountWithdraw::Initialize()
 {
+    ClearFormData();
+
     FormQuestion question;
-    question.Set<float>("How much would you withdraw",0.f);
+    question.Set<float>("How much would you want to withdraw",0.f);
     formData.emplace("withdraw",question);
 }
 
@@ -63,7 +65,6 @@ void DiamondAccountWithdraw::Content()
 void DiamondAccountWithdraw::ProcessInput()
 {
     float toWithdraw = formData["withdraw"].GetResponse<float>();
-    std::cin >> toWithdraw;
     
     if(toWithdraw < 0) { Log("Invalid input", true); return; }
 

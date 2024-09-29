@@ -10,6 +10,8 @@ DiamondAccountDeposit::DiamondAccountDeposit()
 
 void DiamondAccountDeposit::Initialize()
 {
+    ClearFormData();
+
     FormQuestion question;
     question.Set<float>("How much do you want to deposit",0.f);
     question.AddValidationRule(new InputValidationNumber());

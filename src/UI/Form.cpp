@@ -1,8 +1,14 @@
 #include "Form.h"
 
-Form::~Form()
+void Form::ClearFormData()
 {
     for(auto& formQuestionPair : formData){
-        formQuestionPair.second.ClearValidationRules();
+        formQuestionPair.second.ClearAndDeleteValidationRules();
     }
+    formData.clear();
+}
+
+Form::~Form()
+{
+    ClearFormData();
 }

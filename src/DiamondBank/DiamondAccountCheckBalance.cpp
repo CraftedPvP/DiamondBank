@@ -15,7 +15,6 @@ void DiamondAccountCheckBalance::Content()
 void DiamondAccountCheckBalance::ProcessInput()
 {
     Hide();
-    Pause();
 }
 
 void DiamondAccountCheckBalance::ShowBalance()

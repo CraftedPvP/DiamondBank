@@ -4,8 +4,9 @@
 #include <string>
 #include <vector>
 #include <functional>
+#include "UIBase.h"
 
-class Menu{
+class Menu : public UIBase{
     bool keepShowing = true;
     int choice = 0;
 
@@ -21,12 +22,10 @@ public:
     void DisplayBanner();
     void SetActions(const std::string actionsToSet[], int numOfActions);
     void SetChooseCallback(ChooseCallback callback);
-    void Show();
-    void Hide();
+    void Content() override;
+    void ProcessInput() override;
+
     int GetChoice();
-    
-    void Pause();
-    void ClearInput();
 };
 
 

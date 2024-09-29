@@ -32,9 +32,6 @@ void DiamondBank::Initialize(){
 
     ((DiamondAccountCreate*)accountCreate)->Initialize();
     ((DiamondAccountLogin*)accountLogin)->Initialize();
-    ((DiamondAccountDeposit*)accountDeposit)->Initialize();
-    ((DiamondAccountWithdraw*)accountWithdraw)->Initialize();
-    ((DiamondAccountClose*)accountClose)->Initialize();
 
     login.name = "Diamond Bank Login";
     std::string actions[] = {
@@ -88,6 +85,8 @@ void DiamondBank::LaunchUI()
         if(accountLogin->IsLoggedIn()) signedIn.Show();
     }
     while(wantsToContinue);
+    
+    login.Log("Closing");
 }
 
 void DiamondBank::OnChoose_Login(int choice)
@@ -121,6 +120,14 @@ void DiamondBank::OnChoose_SignedIn(int choice)
 }
 void DiamondBank::OnLoginSuccess_Event(AccountInfo user)
 {
+    // delay initialization until after sign in
+    ((DiamondAccountDeposit*)accountDeposit)->Initialize();
+    ((DiamondAccountWithdraw*)accountWithdraw)->Initialize();
+    ((DiamondAccountClose*)accountClose)->Initialize();
+
+    signedIn.name = "Diamond Bank Homepage\nYou are signed in as ";
+    signedIn.name += GetAccountLogin()->GetUser().Name;
+
     login.Hide();
 }
 
