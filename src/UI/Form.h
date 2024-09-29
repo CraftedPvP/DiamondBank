@@ -22,6 +22,10 @@ public:
      * Set the form data here
      */
     virtual void Initialize() = 0;
+    /**
+     * Clears input validation rules made that was added into the FormQuestion if there is any
+     */
+    ~Form();
 };
 
 #endif

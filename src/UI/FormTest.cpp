@@ -9,6 +9,7 @@ using std::endl;
 
 void FormTest::Initialize()
 {
+    FormQuestion question;
     question.Set<std::string>("Are you a hotdog","");
     formData.emplace("1",question);
 

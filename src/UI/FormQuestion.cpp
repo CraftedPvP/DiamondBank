@@ -34,7 +34,8 @@ bool FormQuestion::IsInvalidInput(std::variant<int,float,std::string> tempInput)
 
     return false;
 }
-void FormQuestion::AddValidationRule(IValidation* validation) { validationRules.push_back(validation); }
+std::vector<IValidation *> &FormQuestion::GetValidationRules() { return validationRules; }
+void FormQuestion::AddValidationRule(IValidation *validation) { validationRules.push_back(validation); }
 std::string FormQuestion::GetQuestion() { return question; }
 
 std::string FormQuestion::GetType(){
@@ -88,11 +89,6 @@ void FormQuestion::PrintResponse()
     },response);
 }
 
-FormQuestion::~FormQuestion()
-{
-    ClearValidationRules();
-}
-
 void FormQuestion::ClearInput()
 {
     std::cin.clear();
@@ -100,8 +96,7 @@ void FormQuestion::ClearInput()
 }
 
 void FormQuestion::ClearValidationRules()
-{
-    std::cout << "Cleared"<<std::endl;
+{// call this when the form is no longer needed. otherwise, using the rule pointer will crash in FormQuestion inside IsInvalidInput
     for(auto& validation : validationRules){
         delete validation;
     }

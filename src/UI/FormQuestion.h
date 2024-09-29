@@ -17,6 +17,7 @@ class FormQuestion{
     bool IsInvalidInput(std::variant<int,float,std::string> tempInput);
 
     public:
+    std::vector<IValidation*>& GetValidationRules();
     void AddValidationRule(IValidation* validation);
     std::string GetQuestion();
 
@@ -37,6 +38,5 @@ class FormQuestion{
     void PrintResponse();
     void ClearValidationRules();
     void ClearInput();
-    ~FormQuestion();
 };
 #endif

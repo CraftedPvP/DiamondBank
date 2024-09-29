@@ -2,12 +2,12 @@
 #define FORMTEST_H
 
 #include "Form.h"
+#include "../InputValidation/InputValidationNumber.h"
 
 /**
  * Used to access other bank features for verification or whatever
  */
 class FormTest : public Form {
-    FormQuestion question;
 public:
     /**
      * Set the form data here
