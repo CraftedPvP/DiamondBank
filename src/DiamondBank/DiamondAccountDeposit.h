@@ -6,6 +6,7 @@
 #include "../Bank/BankFeature.h"
 
 class DiamondAccountDeposit : public AccountDeposit, public BankFeature{
+    void AskForInput();
 public:
     DiamondAccountDeposit();
     void SetTransactionFee(float depositFee) override;

@@ -24,7 +24,9 @@ public:
     void Show();
     void Hide();
     int GetChoice();
+    
     void Pause();
+    void ClearInput();
 };
 
 

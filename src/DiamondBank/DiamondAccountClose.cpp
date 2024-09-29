@@ -29,6 +29,7 @@ bool DiamondAccountClose::Close()
 
     bool success = GetBank()->GetAccountDatabase()->DeleteAccount(email);
     menu.Log("Your diamond bank account has been closed");
+    if(onAccountCloseSuccess) onAccountCloseSuccess();
     return success;
 }
 
@@ -37,5 +38,7 @@ void DiamondAccountClose::OnChoose(int choice)
     if(choice == 1){
         Close();
         menu.Hide();
+        menu.Pause();
     }
 }
+void DiamondAccountClose::SetOnAccountCloseSuccess(OnAccountCloseSuccess callback) { onAccountCloseSuccess = callback; }

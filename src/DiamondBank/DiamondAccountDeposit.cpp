@@ -1,5 +1,6 @@
 #include "DiamondAccountDeposit.h"
 #include <iostream>
+#include "../Utility/TextHelper.h"
 
 DiamondAccountDeposit::DiamondAccountDeposit()
 {
@@ -31,9 +32,16 @@ void DiamondAccountDeposit::SetTransactionFee(float depositFee)
 
 void DiamondAccountDeposit::OnChoose(int choice)
 {
+    if(choice == 1){
+        AskForInput();
+    }
+}
+
+void DiamondAccountDeposit::AskForInput()
+{
     AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
     float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-    menu.Log("You currently have " + std::to_string(diamonds) + " diamond(s).");
+    menu.Log("You currently have " + TextHelper::FixedFloat(diamonds) + " diamond(s).");
     menu.Log("How much would you deposit?");
 
     float toDeposit = 0;
@@ -42,9 +50,9 @@ void DiamondAccountDeposit::OnChoose(int choice)
     if(toDeposit < 0) { menu.Log("Invalid input", true); return; }
 
     if(Deposit(toDeposit)){
-        menu.Log("You deposited " + std::to_string(toDeposit) + " diamond(s).");
+        menu.Log("You deposited " + TextHelper::FixedFloat(toDeposit) + " diamond(s).");
         diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-        menu.Log("You now have a total of " + std::to_string(diamonds) + " diamond(s) left in the bank.");
+        menu.Log("You now have a total of " + TextHelper::FixedFloat(diamonds) + " diamond(s) left in the bank.");
     }
     else{
         menu.Log("Unable to deposit at this time. Try again later.",true);

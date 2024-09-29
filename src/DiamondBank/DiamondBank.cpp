@@ -46,22 +46,28 @@ void DiamondBank::Initialize(){
         "Deposit Diamonds",
         "Withdraw Diamonds",
         "Close the account",
+        "Sign out",
         "Quit"
     };
     size = sizeof(actions2)/sizeof(actions2[0]);
     signedIn.SetActions(actions2,size);
     signedIn.SetChooseCallback(std::bind(&DiamondBank::OnChoose_SignedIn,this,std::placeholders::_1));
+
+    ((DiamondAccountLogin*)accountLogin)->SetOnLoginSuccess(std::bind(&DiamondBank::OnLoginSuccess_Event,this,std::placeholders::_1));
+    ((DiamondAccountLogin*)accountLogin)->SetOnLogoutSuccess(std::bind(&DiamondBank::OnLogoutSuccess_Event,this));
+    ((DiamondAccountClose*)accountClose)->SetOnAccountCloseSuccess(std::bind(&DiamondBank::OnAccountCloseSuccess_Event,this));
 }
 void DiamondBank::LaunchUI()
 {
     if(!GetAccountDatabase()->CanConnect()) {
         std::cerr << "Error: Apparently, it's not possible to run the executable in any directory. You have to go into the (root)/build/ folder before running the program" << std::endl;
         #ifdef DEVHELP
-        std::cerr << "Error: But I convenience function to create a database to where you're calling this from for the sake of testing. You're welcome \\()/" << std::endl;
-        std::cerr << "Just know that your database will change if you change the folder of where you're calling the executable from." << std::endl;
+        std::cerr << "\tBut I made convenience function to create a database to where you're calling this from for the sake of testing. You're welcome \\()/" << std::endl;
+        std::cerr << "\tJust know that your database will change if you change the folder of where you're calling the executable from." << std::endl;
         login.Pause();
         if(!accountDatabase->CreateDatabase()) {
             login.Log("Unable to create database in the current directory. Exiting the program", true);
+            login.Pause();
             return;
         }
         #else
@@ -70,7 +76,6 @@ void DiamondBank::LaunchUI()
         #endif
     }
 
-    bool wantsToContinue = true;
     do{
         login.Show();
         wantsToContinue = accountLogin->IsLoggedIn(); 
@@ -101,5 +106,23 @@ void DiamondBank::OnChoose_SignedIn(int choice)
             break;
         case 5:
             ((DiamondAccountLogin*)accountLogin)->Logout();
+            break;
+        case 6:
+            ((DiamondAccountLogin*)accountLogin)->Logout();
+            wantsToContinue = false;
+            break;
     }
+}
+void DiamondBank::OnLoginSuccess_Event(AccountInfo user)
+{
+    login.Hide();
+}
+
+void DiamondBank::OnAccountCloseSuccess_Event()
+{
+    signedIn.Hide();
+}
+void DiamondBank::OnLogoutSuccess_Event()
+{
+    signedIn.Hide();
 }

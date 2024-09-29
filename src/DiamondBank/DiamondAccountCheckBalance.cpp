@@ -1,5 +1,6 @@
 #include "DiamondAccountCheckBalance.h"
 #include <functional>
+#include "../Utility/TextHelper.h"
 
 DiamondAccountCheckBalance::DiamondAccountCheckBalance()
 {
@@ -21,7 +22,7 @@ void DiamondAccountCheckBalance::ShowBalance()
     }
     AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
     float amountStored = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-    menu.Log("You have " + std::to_string(amountStored) + " diamond(s).");
+    menu.Log("You have " + TextHelper::FixedFloat(amountStored) + " diamond(s).");
 }
 
 void DiamondAccountCheckBalance::OnChoose(int choice)

@@ -1,5 +1,6 @@
 #include "DiamondAccountWithdraw.h"
 #include <iostream>
+#include "../Utility/TextHelper.h"
 
 DiamondAccountWithdraw::DiamondAccountWithdraw()
 {
@@ -28,8 +29,8 @@ bool DiamondAccountWithdraw::CheckIfCanWithdraw(float toWidthraw)
     AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
     float amountStored = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
     if(amountStored < toWidthraw){
-        float missing = amountStored - toWidthraw;
-        menu.Log("You lack funds to withdraw " + std::to_string(toWidthraw) + " diamond(s). You still need " + std::to_string(missing) + " diamond(s).", true);
+        float missing = std::abs(amountStored - toWidthraw);
+        menu.Log("You lack funds to withdraw " + TextHelper::FixedFloat(toWidthraw) + " diamond(s). You still need " + TextHelper::FixedFloat(missing) + " diamond(s).", true);
         return false;
     }
 
@@ -56,7 +57,7 @@ void DiamondAccountWithdraw::AskForInput()
 {
     AccountInfo user = GetBank()->GetAccountLogin()->GetUser();
     float diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-    menu.Log("You currently have " + std::to_string(diamonds) + " diamond(s).");
+    menu.Log("You currently have " + TextHelper::FixedFloat(diamonds) + " diamond(s).");
     menu.Log("How much would you withdraw?");
 
     float toWithdraw = 0;
@@ -65,9 +66,9 @@ void DiamondAccountWithdraw::AskForInput()
     if(toWithdraw < 0) { menu.Log("Invalid input", true); return; }
 
     if(Withdraw(toWithdraw)){
-        menu.Log("You withdrew " + std::to_string(toWithdraw) + " diamond(s).");
+        menu.Log("You withdrew " + TextHelper::FixedFloat(toWithdraw) + " diamond(s).");
         diamonds = GetBank()->GetAccountDatabase()->GetMoney(user.Email);
-        menu.Log("You now have a total of " + std::to_string(diamonds) + " diamond(s) left in the bank.");
+        menu.Log("You now have a total of " + TextHelper::FixedFloat(diamonds) + " diamond(s) left in the bank.");
     }
     else{
         menu.Log("Unable to withdraw at this time. Try again later.",true);

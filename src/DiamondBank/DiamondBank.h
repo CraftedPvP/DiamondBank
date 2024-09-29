@@ -15,6 +15,12 @@ class DiamondBank : Bank{
 
     void OnChoose_Login(int choice);
     void OnChoose_SignedIn(int choice);
+    
+    bool wantsToContinue = true;
+
+    void OnLoginSuccess_Event(AccountInfo user);
+    void OnAccountCloseSuccess_Event();
+    void OnLogoutSuccess_Event();
 public:
     DiamondBank();
     void Initialize() override;

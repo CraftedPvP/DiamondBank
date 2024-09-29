@@ -45,9 +45,17 @@ void DiamondAccountLogin::OnChoose(int choice)
 void DiamondAccountLogin::Logout()
 {
     // clear it in-case it gets read afterwards
-    currentUser.Email = "a@a.co";
-    currentUser.Name = "aaa";
+    currentUser.Email = "";
+    currentUser.Name = "";
+
+    menu.Log("Logged out");
+
+    if(onLogoutSuccess) onLogoutSuccess();
 }
+
+void DiamondAccountLogin::SetOnLoginSuccess(OnLoginSuccess callback) { onLoginSuccess = callback; }
+
+void DiamondAccountLogin::SetOnLogoutSuccess(OnLogoutSuccess callback){ onLogoutSuccess = callback; }
 
 void DiamondAccountLogin::AskForLoginCredentials()
 {
@@ -62,5 +70,7 @@ void DiamondAccountLogin::AskForLoginCredentials()
     if(Login(email,pass)){
         menu.Log("Login success");
         menu.Hide();
+        menu.Pause();
+        if(onLoginSuccess) onLoginSuccess(currentUser);
     }
 }
