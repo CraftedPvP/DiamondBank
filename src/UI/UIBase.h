@@ -24,7 +24,7 @@ public:
     void Hide() override;
 
     virtual void Content() = 0;
-    virtual void AskForInput();
+    virtual void ProcessInput();
     
     void Pause();
     void ClearScreen();

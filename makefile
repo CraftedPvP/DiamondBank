@@ -59,7 +59,7 @@ clean:
 # delete directory recursively and ignore non-existent file/folder if they don't exist
 	@rm -rf $(OBJ_DIR)
 # delete one file and ignore non-existent file if they don't exist
-	@rm -f $(OUTPUT)
+	@rm -f $(OUTPUT).exe
 	@rm -f $(DATABASE_PATH)
 	@rm -f $(DATABASE_PATH)copy
 	@echo "** Cleaning completed **"

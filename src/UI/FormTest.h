@@ -13,7 +13,7 @@ public:
      */
     void Initialize() override;
     void Content() override;
-    void AskForInput() override;
+    void ProcessInput() override;
 };
 
 #endif
