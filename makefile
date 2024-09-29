@@ -4,7 +4,7 @@
 PROGRAM_NAME := DiamondBank
 
 # Folder paths
-BUILD_DIR = build/
+BUILD_DIR = build/make/
 OBJ_DIR = obj/
 SRC_DIR = src/
 

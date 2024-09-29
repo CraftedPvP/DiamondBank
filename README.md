@@ -1,6 +1,7 @@
-# 💎 Diamond Bank Vault 💎
+# 💎 Diamond Bank 💎
 
-The 💎 Bank Vault is a C++17 concept project compiled with make. It is a console program designed to simulate a bank interface.
+The 💎 Diamond Bank 💎 is a C++17 concept project compiled with make. It is a console program designed to simulate a bank interface.
+
 ❗ Do not use this in a real production scenario ❗
 
 ## Setup
