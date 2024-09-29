@@ -8,7 +8,6 @@
  */
 class AccountCheckBalance {
 public:
-    AccountCheckBalance();
     virtual void ShowBalance() = 0;
 };
 

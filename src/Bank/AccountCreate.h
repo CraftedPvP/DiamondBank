@@ -2,7 +2,7 @@
 #define ACCOUNTCREATE_H
 
 #include <string>
-
+#include "AccountInfo.h"
 /**
  * Interface for account registration
  */

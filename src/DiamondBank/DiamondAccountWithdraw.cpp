@@ -13,6 +13,11 @@ DiamondAccountWithdraw::DiamondAccountWithdraw()
     menu.SetChooseCallback(std::bind(&DiamondAccountWithdraw::OnChoose,this,std::placeholders::_1));
 }
 
+void DiamondAccountWithdraw::SetTransactionFee(float transactionFee)
+{
+    this->transactionFee = transactionFee;
+}
+
 bool DiamondAccountWithdraw::CheckIfCanWithdraw(float toWidthraw)
 {
     if(!GetBank()->GetAccountLogin()->IsLoggedIn()){

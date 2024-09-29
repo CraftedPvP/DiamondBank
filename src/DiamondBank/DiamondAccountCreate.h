@@ -2,7 +2,6 @@
 #define DIAMONDACCOUNTCREATE_H
 
 #include <string>
-#include "../Bank/AccountCreate.h"
 #include "../Bank/BankFeature.h"
 
 class DiamondAccountCreate : public AccountCreate, public BankFeature{
