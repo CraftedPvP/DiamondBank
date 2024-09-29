@@ -1,0 +1,89 @@
+#include "DiamondBank.h"
+
+#include "DiamondAccountDatabase.h"
+#include "DiamondAccountCreate.h"
+#include "DiamondAccountLogin.h"
+#include "DiamondAccountCheckBalance.h"
+#include "DiamondAccountDeposit.h"
+#include "DiamondAccountWithdraw.h"
+#include "DiamondAccountClose.h"
+DiamondBank::DiamondBank()
+{
+    name = "Diamond Bank";
+
+    accountDatabase = new DiamondAccountDatabase();
+    accountCreate = new DiamondAccountCreate();
+    accountLogin = new DiamondAccountLogin();
+    accountCheckBalance = new DiamondAccountCheckBalance();
+    accountDeposit = new DiamondAccountDeposit();
+    accountWithdraw = new DiamondAccountWithdraw();
+    accountClose = new DiamondAccountClose();
+}
+
+DiamondBank::~DiamondBank()
+{
+    delete accountDatabase;
+    delete accountCreate;
+    delete accountLogin;
+    delete accountCheckBalance;
+    delete accountDeposit;
+    delete accountWithdraw;
+    delete accountClose;
+}
+void DiamondBank::Initialize(){
+    ((DiamondAccountCreate*)accountCreate)->SetBank(this);
+    ((DiamondAccountLogin*)accountLogin)->SetBank(this);
+    ((DiamondAccountCheckBalance*)accountCheckBalance)->SetBank(this);
+    ((DiamondAccountDeposit*)accountDeposit)->SetBank(this);
+    ((DiamondAccountWithdraw*)accountWithdraw)->SetBank(this);
+    ((DiamondAccountClose*)accountClose)->SetBank(this);
+
+    login.name = "Diamond Bank Login";
+    std::string actions[] = {
+        "Login",
+        "Create an account",
+        "Quit"
+    };
+    int size = sizeof(actions)/sizeof(actions[0]);
+    login.SetActions(actions,size);
+    login.SetChooseCallback(std::bind(&DiamondBank::OnChoose_Login,this,std::placeholders::_1));
+
+    signedIn.name = "Diamond Bank Homepage";
+    std::string actions[] = {
+        "Check Balance",
+        "Deposit Diamonds",
+        "Withdraw Diamonds",
+        "Close the account",
+        "Quit"
+    };
+    int size = sizeof(actions)/sizeof(actions[0]);
+    signedIn.SetActions(actions,size);
+    signedIn.SetChooseCallback(std::bind(&DiamondBank::OnChoose_SignedIn,this,std::placeholders::_1));
+}
+void DiamondBank::LaunchUI()
+{
+    login.Show();
+}
+
+void DiamondBank::OnChoose_Login(int choice)
+{
+    if(choice == 1) ((DiamondAccountLogin*)accountLogin)->ShowMenu();
+    else if(choice == 2) ((DiamondAccountCreate*)accountCreate)->ShowMenu();
+}
+void DiamondBank::OnChoose_SignedIn(int choice)
+{
+    switch(choice){
+        case 1:
+            ((DiamondAccountCheckBalance*)accountCheckBalance)->ShowMenu();
+            break;
+        case 2:
+            ((DiamondAccountDeposit*)accountDeposit)->ShowMenu();
+            break;
+        case 3:
+            ((DiamondAccountWithdraw*)accountWithdraw)->ShowMenu();
+            break;
+        case 4:
+            ((DiamondAccountClose*)accountClose)->ShowMenu();
+            break;
+    }
+}
