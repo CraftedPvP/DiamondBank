@@ -63,7 +63,8 @@ void DiamondBank::Initialize(){
 void DiamondBank::LaunchUI()
 {
     if(!GetAccountDatabase()->CanConnect()) {
-        std::cerr << "Error: Apparently, it's not possible to run the executable in any directory. You have to go into the (root)/build/ folder before running the program" << std::endl;
+        std::cerr << "Error: The program has to run beside the " << ((DiamondAccountDatabase*)accountDatabase)->GetDatabaseUrl() << ". ";
+        std::cerr << "Check if you're running the program beside it."<< std::endl;
         #ifdef DEVHELP
         std::cerr << "\tBut I made convenience function to create a database to where you're calling this from for the sake of testing. You're welcome \\()/" << std::endl;
         std::cerr << "\tJust know that your database will change if you change the folder of where you're calling the executable from." << std::endl;

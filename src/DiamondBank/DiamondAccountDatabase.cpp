@@ -208,6 +208,8 @@ bool DiamondAccountDatabase::CreateDatabase()
     return true;
 }
 
+string DiamondAccountDatabase::GetDatabaseUrl() { return databaseUrl; }
+
 bool DiamondAccountDatabase::DeleteAccount(string email)
 {
     if(!CheckIfUserExists(email)){

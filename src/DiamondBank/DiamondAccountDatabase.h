@@ -38,6 +38,7 @@ public:
     bool AddMoney(string email, float amount) override;
 
     bool CreateDatabase() override;
+    string GetDatabaseUrl();
 };
 
 #endif

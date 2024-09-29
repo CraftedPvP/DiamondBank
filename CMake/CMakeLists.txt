@@ -8,13 +8,19 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Specify the source and include directories
-set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
+set(SRC_DIR "${CMAKE_SOURCE_DIR}/../src")
 
 # Recursively collect all source files (both .cpp and .h)
 file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp" "${SRC_DIR}/*.h")
 
-# Set the output directory
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/CMake")
+# Set the output directories to avoid clutter in the root folder
+set(CMAKE_BINARY_DIR "${CMAKE_SOURCE_DIR}/../build/${PROJECT_NAME}")
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
+
+# Ensure CMake files are also placed in the build folder
+set(CMAKE_CACHEFILE_DIR "${CMAKE_BINARY_DIR}")
 
 # Add the executable using the collected source files
 add_executable(${PROJECT_NAME} ${SOURCES})

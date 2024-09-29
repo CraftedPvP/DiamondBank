@@ -5,10 +5,19 @@ The 💎 Diamond Bank 💎 is a C++17 concept project compiled with make. It is 
 ❗ Do not use this in a real production scenario ❗
 
 ## Setup
+
+### Via make
+
 1. Clone the repo or download it as a `.zip`
 2. Open the cloned repo or extracted folder in your command prompt/terminal
 3. Type in `make` in the root folder to compile using make.
 4. Type `make run` to run the program
+
+### Via CMake
+
+1. Clone the repo or download it as a `.zip`
+2. Open the cloned repo or extracted folder in your command prompt/terminal
+3. **in-progress**
 
 ## Available commands
 ```
