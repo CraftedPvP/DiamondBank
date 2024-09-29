@@ -112,7 +112,7 @@ echo.
 @REM If no arguments are passed, it means we will build and run the program
 if "%1" == "" (
     call :BuildMsbuild
-    call :Run
+    call :RunMSBuild
     exit /b 0
 )
 

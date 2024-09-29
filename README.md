@@ -1,6 +1,6 @@
 # 💎 Diamond Bank 💎
 
-The 💎 Diamond Bank 💎 is a C++17 concept project compiled with make. It is a console program designed to simulate a bank interface.
+The 💎 Diamond Bank 💎 is a C++17 concept project compiled with make and CMake (MinGW and msbuild). It is a console program designed to simulate a bank interface.
 
 ❗ Do not use this in a real production scenario ❗
 
@@ -36,17 +36,21 @@ make clean
 --
 
 ## The CMake way ##
-# Builds the project and runs the executable
-cmake-setup.bat
+# Builds the project with MSBuild and runs the executable
+setup-cmake.bat
 
-# Builds the project only
-cmake-setup.bat build
+# Builds the project for MinGW and MSbuild
+setup-cmake.bat build
+setup-cmake.bat build-make
+setup-cmake.bat build-msbuild
 
-# Run the executable only
-cmake-setup.bat run
+# Run the executable for MinGW and MSbuild
+setup-cmake.bat run
+setup-cmake.bat run-make
+setup-cmake.bat run-msbuild
 
-# Clean the project only
-cmake-setup.bat clean
+# Clean the project for MinGW and MSbuild
+setup-cmake.bat clean
 ```
 
 ## Features
@@ -63,7 +67,9 @@ cmake-setup.bat clean
    - You can install cmake [here](https://cmake.org/download/)
 3. What if I don't have `msbuild`?
    - You can install Visual Studio Build Tools [here](https://visualstudio.microsoft.com/downloads/?q=build+tools)
-4. It says I can't connect to the database?
+4. What if I don't have `w64devkit`?
+   - You can get w64devkit [here](https://github.com/skeeto/w64devkit/releases). Be sure to add it in the environment path.
+5. It says I can't connect to the database?
    - It means that the `DiamondBank.exe` cannot find the database which is `database.txt`.
    - At the moment, the executable will attempt to search for files relative to the folder where it was called from.
    - You have two options:
