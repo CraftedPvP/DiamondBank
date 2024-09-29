@@ -39,15 +39,15 @@ void DiamondBank::Initialize(){
     login.SetChooseCallback(std::bind(&DiamondBank::OnChoose_Login,this,std::placeholders::_1));
 
     signedIn.name = "Diamond Bank Homepage";
-    std::string actions[] = {
+    std::string actions2[] = {
         "Check Balance",
         "Deposit Diamonds",
         "Withdraw Diamonds",
         "Close the account",
         "Quit"
     };
-    int size = sizeof(actions)/sizeof(actions[0]);
-    signedIn.SetActions(actions,size);
+    size = sizeof(actions2)/sizeof(actions2[0]);
+    signedIn.SetActions(actions2,size);
     signedIn.SetChooseCallback(std::bind(&DiamondBank::OnChoose_SignedIn,this,std::placeholders::_1));
 }
 void DiamondBank::LaunchUI()

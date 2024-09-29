@@ -58,7 +58,7 @@ void Menu::Hide() { keepShowing = false; }
 
 int Menu::GetChoice() { return choice; }
 
-void Menu::Log(std::string content, bool isError = false){
+void Menu::Log(std::string content, bool isError){
     if(isError) cerr << "Error: " << content << endl;
     else cout << "Info: " << content << endl;
 }
