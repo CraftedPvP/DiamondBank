@@ -4,6 +4,7 @@ title "CMake Setup"
 set buildDir=build
 set cmakeDir=CMake
 set keepFile=CMakeLists.txt
+set buildExecutableDebug=.\build\DiamondBank\bin\Debug
 
 @REM Skip function definition so they won't get called
 goto :main
@@ -24,12 +25,12 @@ goto :main
 exit /b
 
 :Run
-    if not exist .\build\DiamondBank\bin\Debug\DiamondBank.exe (
-        echo === Error: Executable not found. Try building it first...
+    if not exist %buildExecutable%\DiamondBank.exe (
+        echo === Error: Executable not found in "%buildExecutable%". Try building it first...
         exit /b 0
     )
     echo === Running Executable
-    .\build\DiamondBank\bin\Debug\DiamondBank.exe
+    %buildExecutable%\DiamondBank.exe
 exit /b
 
 :Clean

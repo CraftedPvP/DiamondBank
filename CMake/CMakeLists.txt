@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.6)
 
 # Set the project name
 project(DiamondBank
@@ -14,8 +14,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # Specify the source and include directories
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/../src")
 
+# Add help tool for devs to test the program
+add_compile_options(-DDEVHELP)
+
 # Recursively collect all source files (both .cpp and .h)
 file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp" "${SRC_DIR}/*.h")
+
+# Retain folder hierarchy by specifying the source files with their full paths
+source_group(TREE "${SRC_DIR}"
+    PREFIX "Source Files"
+    FILES ${SOURCES}])
 
 # Set the output directories to avoid clutter in the root folder
 set(CMAKE_BINARY_DIR "${CMAKE_SOURCE_DIR}/../build/${PROJECT_NAME}")
@@ -31,3 +39,8 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 
 # Optionally specify additional include directories if needed
 # target_include_directories(${PROJECT_NAME} PRIVATE "${SRC_DIR}")
+
+# Set the Visual Studio startup project
+if (CMAKE_GENERATOR MATCHES "Visual Studio")
+set_property(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}" PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})
+endif()

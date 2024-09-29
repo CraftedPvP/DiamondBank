@@ -27,38 +27,44 @@ SOURCES = $(wildcard $(SRC_DIR)*.cpp) $(wildcard $(SRC_DIR)*/*.cpp)
 OBJECTS = $(patsubst $(SRC_DIR)%.cpp, $(OBJ_DIR)%.o, $(SOURCES))
 
 # INSTRUCTIONS
-all: $(OUTPUT)
+all:
+	make build
+	make run
+
+# starts the build process
+build: $(OUTPUT)
 
 # this makes the executable
 $(OUTPUT): $(OBJECTS)
 	@echo "** Gathering Sources ($(SRC_DIR)*.cpp) **"
-# @echo $(SOURCES)
-# @echo "----"
+# 	@echo $(SOURCES)
+# 	@echo "----"
 	
 	@echo "** Making Objects ($(OBJ_DIR)*.o) **"
-# @echo $(OBJECTS)
-# @echo "----"
+# 	@echo $(OBJECTS)
+#	@echo "----"
 	
 	@mkdir -p $(BUILD_DIR)
 	@echo "** Compiling $@ **"
 	@$(CXX) $(OBJECTS) -o $@
 	@echo "** Compiled $@ successfully **"
 
-# these just makes the objects
+# 	these just makes the objects
 $(OBJ_DIR)%.o: $(SRC_DIR)%.cpp
-# recursively create a directory for the object since they need to have their sub-folders
+# 	recursively create a directory for the object since they need to have their sub-folders
 	@mkdir -p $(dir $@)
-# compile the object
+# 	compile the object
 	@$(CXX) $(CXXFLAGS) $(CUSTOM_DEFINES) -c $< -o $@
 
 run:
-# runs the executable with some notes I've added along the way
+# 	runs the executable with some notes I've added along the way
 	@$(OUTPUT)
 clean:
 	@echo "** Cleaning project **"
-# delete directory recursively and ignore non-existent file/folder if they don't exist
+# 	delete directory recursively and ignore non-existent folder if they don't exist
 	@rm -rf $(OBJ_DIR)
-# delete one file and ignore non-existent file if they don't exist
+	@rm -rf $(BUILD_DIR)
+# 	delete one file and ignore non-existent file if they don't exist
 	@rm -f $(OUTPUT).exe
 	@rm -f $(DATABASE_PATH)
 	@rm -f $(DATABASE_PATH)copy
