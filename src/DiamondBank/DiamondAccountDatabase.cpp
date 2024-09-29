@@ -11,6 +11,7 @@ using std::string;
 using std::ofstream;
 using std::ifstream;
 using std::stringstream;
+
 DiamondAccountDatabase::DiamondAccountDatabase()
 {
     databaseUrl = "database.txt";
@@ -48,6 +49,17 @@ AccountInfo DiamondAccountDatabase::GetAccount(string email)
     }
 
     return user;
+}
+
+bool DiamondAccountDatabase::CanConnect()
+{
+    ifstream inputFile (databaseUrl,std::ios::in);
+    if (!inputFile.is_open())
+    {
+        cerr << "Unable to connect to the database" << endl;
+        return false;
+    }
+    return true;
 }
 
 void DiamondAccountDatabase::MakeDatabaseBackup()

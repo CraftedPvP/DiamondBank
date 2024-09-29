@@ -25,6 +25,7 @@ class DiamondAccountDatabase : public AccountDatabase {
 public:
     DiamondAccountDatabase();
     
+    bool CanConnect() override;
     void MakeDatabaseBackup() override;
     bool CheckIfUserExists(string email) override;
     AccountInfo GetAccount(string email) override;

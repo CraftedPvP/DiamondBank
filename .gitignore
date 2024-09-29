@@ -30,3 +30,6 @@
 *.exe
 *.out
 *.app
+
+# Custom to this project
+obj/

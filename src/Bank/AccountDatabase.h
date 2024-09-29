@@ -8,6 +8,9 @@ using std::string;
 
 class AccountDatabase {
 public:
+    // call this at app start up
+    virtual bool CanConnect() = 0;
+
     // call this BEFORE you make changes in the database
     virtual void MakeDatabaseBackup() = 0;
 

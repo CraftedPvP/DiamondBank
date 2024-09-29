@@ -7,6 +7,8 @@
 #include "DiamondAccountDeposit.h"
 #include "DiamondAccountWithdraw.h"
 #include "DiamondAccountClose.h"
+#include <iostream>
+
 DiamondBank::DiamondBank()
 {
     name = "Diamond Bank";
@@ -52,13 +54,20 @@ void DiamondBank::Initialize(){
 }
 void DiamondBank::LaunchUI()
 {
-    bool justQuit = true;
+    if(!GetAccountDatabase()->CanConnect()) {
+        #ifdef DEVHELP
+        std::cerr << "Error: Apparently, it's not possible to run the executable in any directory. You have to go into the (root)/build/ folder before running the program" << endl;
+        #endif
+        return;
+    }
+
+    bool wantsToContinue = true;
     do{
         login.Show();
-        justQuit = !accountLogin->IsLoggedIn(); 
+        wantsToContinue = accountLogin->IsLoggedIn(); 
         if(accountLogin->IsLoggedIn()) signedIn.Show();
     }
-    while(justQuit);
+    while(wantsToContinue);
 }
 
 void DiamondBank::OnChoose_Login(int choice)

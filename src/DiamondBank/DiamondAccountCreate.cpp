@@ -43,6 +43,7 @@ void DiamondAccountCreate::AskForNewCredentials()
     std::cin >> newUser.Email;
     if(CheckIfExisting(newUser.Email)){
         menu.Log("An account with that email already exists. Try logging in.",true);
+        menu.Hide();
         return;
     }
 
@@ -52,10 +53,10 @@ void DiamondAccountCreate::AskForNewCredentials()
     std::string pass = "",confirmPass = "";
     menu.Log("Password: ");
     std::cin >> pass;
-    menu.Log("Password: ");
+    menu.Log("Confirm Password: ");
     std::cin >> confirmPass;
     
-    if(CheckIfValidPassword(pass,confirmPass)){
+    if(!CheckIfValidPassword(pass,confirmPass)){
         menu.Log("Invalid password or pass and confirm password is not the same. Try making it longer or same.",true);
         return;
     }
