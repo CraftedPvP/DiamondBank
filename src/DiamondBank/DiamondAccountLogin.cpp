@@ -17,9 +17,7 @@ DiamondAccountLogin::DiamondAccountLogin()
 
 DiamondAccountLogin::~DiamondAccountLogin()
 {
-    // clear it in-case it gets read afterwards
-    currentUser.Email = "a@a.co";
-    currentUser.Name = "aaa";
+    Logout();
 }
 
 AccountInfo DiamondAccountLogin::GetUser() { return currentUser; }
@@ -44,6 +42,13 @@ void DiamondAccountLogin::OnChoose(int choice)
     }
 }
 
+void DiamondAccountLogin::Logout()
+{
+    // clear it in-case it gets read afterwards
+    currentUser.Email = "a@a.co";
+    currentUser.Name = "aaa";
+}
+
 void DiamondAccountLogin::AskForLoginCredentials()
 {
     menu.Log("Email: ");
@@ -54,5 +59,8 @@ void DiamondAccountLogin::AskForLoginCredentials()
     menu.Log("Password: ");
     std::cin >> pass;
 
-    Login(email,pass);
+    if(Login(email,pass)){
+        menu.Log("Login success");
+        menu.Hide();
+    }
 }

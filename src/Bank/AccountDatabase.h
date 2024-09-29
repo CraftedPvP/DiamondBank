@@ -26,6 +26,9 @@ public:
 
     virtual float GetMoney(string email) = 0;
     virtual bool AddMoney(string email, float amount) = 0;
+    
+    // ideally NOT created client side but it's here in-case you want to test out if the database is missing
+    virtual bool CreateDatabase() = 0;
 };
 
 #endif

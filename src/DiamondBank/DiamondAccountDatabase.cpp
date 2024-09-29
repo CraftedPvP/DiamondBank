@@ -106,7 +106,7 @@ AccountInfo DiamondAccountDatabase::Login(string email, string pass)
         cerr << "Unable to connect to the database" << endl;
         return AccountInfo();
     }
-
+    string hashedPass = HashPassword(pass);
     string line;
     AccountInfo user;
     bool foundUser = false;
@@ -115,7 +115,7 @@ AccountInfo DiamondAccountDatabase::Login(string email, string pass)
         vector<string> data = ParseLine(line);
         user = ParseDelimitedData(data);
         if(user.Email == email) {
-            if(data[1] == pass){
+            if(data[1] == hashedPass){
                 foundUser = true;
                 //cout << "Found user" << endl;
                 break;
@@ -174,7 +174,7 @@ bool DiamondAccountDatabase::AddMoney(string email, float amount)
         if(user.Email == email) {
             user.Money += amount;
                                             // hashed password
-            outputFile << user.Email << delimiter << data[1] << delimiter << user.Name << delimiter << user.Money << delimiter << endl;
+            outputFile << user.Email << delimiter << data[1] << delimiter << user.Name << delimiter << user.Money << endl;
             //cout << "User money has been updated to " << user.Money << endl;
             foundUser = true;
         }
@@ -193,6 +193,19 @@ bool DiamondAccountDatabase::AddMoney(string email, float amount)
 
     if(!foundUser) cerr << "Unable to add money to user" << endl;
     return foundUser;
+}
+
+bool DiamondAccountDatabase::CreateDatabase()
+{
+    ofstream outputFile (databaseUrl);
+    if (!outputFile.is_open()){
+        cerr << "Unable to create the database" << endl;
+        return false;
+    }
+
+    outputFile.close();
+    cout << "Created the database successfully" << endl;
+    return true;
 }
 
 bool DiamondAccountDatabase::DeleteAccount(string email)

@@ -38,18 +38,22 @@ void Menu::Show()
         cout << "Action 1-" << actions.size() << ": ";
         cin >> choice;
 
-        if(choice == actions.size()){
-            Hide();
-            break;
-        }
-        else if(choice > actions.size() || choice <= 0){
+        
+        if(choice > actions.size() || choice <= 0){
             Log("Invalid input", true);
-            system("pause");
+            Pause();
             continue;
         }
-        if (onChoose) onChoose(choice);
+
+        if (onChoose) {
+            onChoose(choice);
+            if(choice == actions.size()){
+                Hide();
+                break;
+            }
+        }
         else Log("OnChoose Callback not set for " + name, true);
-        system("pause");
+        if(keepShowing) Pause();
     }
     while(true);
 }
@@ -57,6 +61,11 @@ void Menu::Show()
 void Menu::Hide() { keepShowing = false; }
 
 int Menu::GetChoice() { return choice; }
+
+void Menu::Pause()
+{
+    system("pause");
+}
 
 void Menu::Log(std::string content, bool isError){
     if(isError) cerr << "Error: " << content << endl;

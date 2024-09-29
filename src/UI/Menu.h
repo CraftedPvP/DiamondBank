@@ -12,7 +12,7 @@ class Menu{
     using ChooseCallback = std::function<void(int)>;
     ChooseCallback onChoose;
     
-    // last element is always quit
+    // last element will always close the menu
     std::vector<std::string> actions;
 public:
     std::string name = "Default menu";
@@ -24,6 +24,7 @@ public:
     void Show();
     void Hide();
     int GetChoice();
+    void Pause();
 };
 
 

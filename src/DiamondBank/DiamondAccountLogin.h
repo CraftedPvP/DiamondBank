@@ -16,6 +16,7 @@ public:
     bool Login(std::string email, std::string pass) override;
     bool IsLoggedIn() override;
     void OnChoose(int choice) override;
+    void Logout() override;
 };
 
 #endif

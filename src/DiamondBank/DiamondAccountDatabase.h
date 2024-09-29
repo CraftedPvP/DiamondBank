@@ -36,6 +36,8 @@ public:
 
     float GetMoney(string email) override;
     bool AddMoney(string email, float amount) override;
+
+    bool CreateDatabase() override;
 };
 
 #endif

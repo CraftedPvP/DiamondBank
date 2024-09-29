@@ -9,6 +9,7 @@ DiamondAccountClose::DiamondAccountClose()
     };
     int size = sizeof(actions)/sizeof(actions[0]);
     menu.SetActions(actions,size);
+    menu.SetChooseCallback(std::bind(&DiamondAccountClose::OnChoose,this,std::placeholders::_1));
 }
 
 bool DiamondAccountClose::Close()
@@ -26,13 +27,15 @@ bool DiamondAccountClose::Close()
     std::cin >> choice;
     if(choice != 'Y' && choice != 'y') return false;
 
-    GetBank()->GetAccountDatabase()->DeleteAccount(email);
-    return true; 
+    bool success = GetBank()->GetAccountDatabase()->DeleteAccount(email);
+    menu.Log("Your diamond bank account has been closed");
+    return success;
 }
 
 void DiamondAccountClose::OnChoose(int choice)
 {
     if(choice == 1){
         Close();
+        menu.Hide();
     }
 }

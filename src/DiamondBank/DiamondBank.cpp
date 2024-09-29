@@ -55,10 +55,19 @@ void DiamondBank::Initialize(){
 void DiamondBank::LaunchUI()
 {
     if(!GetAccountDatabase()->CanConnect()) {
+        std::cerr << "Error: Apparently, it's not possible to run the executable in any directory. You have to go into the (root)/build/ folder before running the program" << std::endl;
         #ifdef DEVHELP
-        std::cerr << "Error: Apparently, it's not possible to run the executable in any directory. You have to go into the (root)/build/ folder before running the program" << endl;
-        #endif
+        std::cerr << "Error: But I convenience function to create a database to where you're calling this from for the sake of testing. You're welcome \\()/" << std::endl;
+        std::cerr << "Just know that your database will change if you change the folder of where you're calling the executable from." << std::endl;
+        login.Pause();
+        if(!accountDatabase->CreateDatabase()) {
+            login.Log("Unable to create database in the current directory. Exiting the program", true);
+            return;
+        }
+        #else
+        login.Pause();
         return;
+        #endif
     }
 
     bool wantsToContinue = true;
@@ -90,5 +99,7 @@ void DiamondBank::OnChoose_SignedIn(int choice)
         case 4:
             ((DiamondAccountClose*)accountClose)->ShowMenu();
             break;
+        case 5:
+            ((DiamondAccountLogin*)accountLogin)->Logout();
     }
 }

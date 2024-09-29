@@ -33,3 +33,6 @@
 
 # Custom to this project
 obj/
+build/
+database.txt
+database.txtcopy
