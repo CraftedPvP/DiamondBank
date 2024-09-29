@@ -32,12 +32,6 @@ void UIBase::Show()
 
 void UIBase::Hide() { keepShowing = false; }
 
-void UIBase::Content()
-{
-    // start of content
-    cout << content << endl;
-}
-
 void UIBase::AskForInput()
 {
     // ask input here

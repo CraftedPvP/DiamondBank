@@ -9,15 +9,21 @@
 class UIBase : public IUI {
 protected:
     bool keepShowing = true;
-    std::string name;
-    std::string content;
+    std::string name = "UI name";
 public:
     virtual void DisplayBanner();
 
+    /**
+     * Main loop
+     */
     void Show() override;
+    
+    /**
+     * stops the Main loop
+     */
     void Hide() override;
 
-    virtual void Content();
+    virtual void Content() = 0;
     virtual void AskForInput();
     
     void Pause();
