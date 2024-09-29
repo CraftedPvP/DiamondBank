@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Set the project name
-project(DiamondBank)
+project(DiamondBank
+    VERSION 1.0
+    DESCRIPTION "A C++17 Project about creating a bank interface for the Diamond Bank"
+    HOMEPAGE_URL "http://192.168.1.136:5000/training/engineless/diamondbank-michael"
+    LANGUAGES CXX)
 
 # Set the C++ standard
 set(CMAKE_CXX_STANDARD 17)

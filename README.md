@@ -17,10 +17,11 @@ The 💎 Diamond Bank 💎 is a C++17 concept project compiled with make. It is 
 
 1. Clone the repo or download it as a `.zip`
 2. Open the cloned repo or extracted folder in your command prompt/terminal
-3. **in-progress**
+3. Call `cmake-setup.bat` to build and run the program.
 
 ## Available commands
 ```
+## The make way ##
 # compiles the project
 make
 
@@ -29,6 +30,21 @@ make run
 
 # cleans the output files
 make clean
+
+--
+
+## The CMake way ##
+# Build and run 
+cmake-setup.bat
+
+# Build only
+cmake-setup.bat build
+
+# Run only
+cmake-setup.bat run
+
+# Clean only
+cmake-setup.bat clean
 ```
 
 ## Features
@@ -41,12 +57,16 @@ make clean
 
 1. What if I don't have `make`?
    - You can follow instructions for installing MinGW [here](https://code.visualstudio.com/docs/cpp/config-mingw#_installing-the-mingww64-toolchain)
-2. It says I can't connect to the database?
-   - It must mean that you tried running the `build/DiamondBank.exe` outside of it's folder.
-   - This won't work as the executable will attempt to search for files relative to the current working directory.
+2. What if I don't have `cmake`?
+   - You can install cmake [here](https://cmake.org/download/)
+3. What if I don't have `msbuild`?
+   - You can install Visual Studio Build Tools [here](https://visualstudio.microsoft.com/downloads/?q=build+tools)
+4. It says I can't connect to the database?
+   - It means that the `DiamondBank.exe` cannot find the database which is `database.txt`.
+   - At the moment, the executable will attempt to search for files relative to the folder where it was called from.
    - You have two options:
-     - You can use `make run` to run the program in any directory.
-     - You can navigate to the `build` folder and run the `DiamondBank.exe` from there.
+     - Locate the executable within the `build` folder and create a `database.txt` beside it. Running the program will work normally.
+     - You can use compile the program with `-DEVHELP` compiler definition to run the program in any directory.
 
 ---
 Made with 🍹
