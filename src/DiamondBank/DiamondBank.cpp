@@ -33,17 +33,17 @@ void DiamondBank::Initialize(){
     ((DiamondAccountCreate*)accountCreate)->Initialize();
     ((DiamondAccountLogin*)accountLogin)->Initialize();
 
-    login.name = "Diamond Bank Login";
+    unsignedInUserUI.name = "Diamond Bank Login";
     std::string actions[] = {
         "Login",
         "Create an account",
         "Quit"
     };
     int size = sizeof(actions)/sizeof(actions[0]);
-    login.SetActions(actions,size);
-    login.SetChooseCallback(std::bind(&DiamondBank::OnChoose_Login,this,std::placeholders::_1));
+    unsignedInUserUI.SetActions(actions,size);
+    unsignedInUserUI.SetChooseCallback(std::bind(&DiamondBank::OnChoose_Login,this,std::placeholders::_1));
 
-    signedIn.name = "Diamond Bank Homepage";
+    signedInUserUI.name = "Diamond Bank Homepage";
     std::string actions2[] = {
         "Check Balance",
         "Deposit Diamonds",
@@ -53,8 +53,8 @@ void DiamondBank::Initialize(){
         "Quit"
     };
     size = sizeof(actions2)/sizeof(actions2[0]);
-    signedIn.SetActions(actions2,size);
-    signedIn.SetChooseCallback(std::bind(&DiamondBank::OnChoose_SignedIn,this,std::placeholders::_1));
+    signedInUserUI.SetActions(actions2,size);
+    signedInUserUI.SetChooseCallback(std::bind(&DiamondBank::OnChoose_SignedIn,this,std::placeholders::_1));
 
     ((DiamondAccountLogin*)accountLogin)->SetOnLoginSuccess(std::bind(&DiamondBank::OnLoginSuccess_Event,this,std::placeholders::_1));
     ((DiamondAccountLogin*)accountLogin)->SetOnLogoutSuccess(std::bind(&DiamondBank::OnLogoutSuccess_Event,this));
@@ -68,26 +68,26 @@ void DiamondBank::LaunchUI()
         #ifdef DEVHELP
         std::cerr << "\tBut I made convenience function to create a database to where you're calling this from for the sake of testing. You're welcome \\()/" << std::endl;
         std::cerr << "\tJust know that your database will change if you change the folder of where you're calling the executable from." << std::endl;
-        login.Pause();
+        unsignedInUserUI.Pause();
         if(!accountDatabase->CreateDatabase()) {
-            login.Log("Unable to create database in the current directory. Exiting the program", true);
-            login.Pause();
+            unsignedInUserUI.Log("Unable to create database in the current directory. Exiting the program", true);
+            unsignedInUserUI.Pause();
             return;
         }
         #else
-        login.Pause();
+        unsignedInUserUI.Pause();
         return;
         #endif
     }
 
     do{
-        login.Show();
+        unsignedInUserUI.Show();
         wantsToContinue = accountLogin->IsLoggedIn(); 
-        if(accountLogin->IsLoggedIn()) signedIn.Show();
+        if(accountLogin->IsLoggedIn()) signedInUserUI.Show();
     }
     while(wantsToContinue);
     
-    login.Log("Closing");
+    unsignedInUserUI.Log("Closing");
 }
 
 void DiamondBank::OnChoose_Login(int choice)
@@ -126,19 +126,19 @@ void DiamondBank::OnLoginSuccess_Event(AccountInfo user)
     ((DiamondAccountWithdraw*)accountWithdraw)->Initialize();
     ((DiamondAccountClose*)accountClose)->Initialize();
 
-    signedIn.name = GetSectionBanner("Homepage");
+    signedInUserUI.name = GetSectionBanner("Homepage");
 
-    login.Hide();
+    unsignedInUserUI.Hide();
 }
 
 void DiamondBank::OnAccountCloseSuccess_Event()
 {
     accountLogin->Logout();
-    signedIn.Hide();
+    signedInUserUI.Hide();
 }
 void DiamondBank::OnLogoutSuccess_Event()
 {
-    signedIn.Hide();
+    signedInUserUI.Hide();
 }
 
 std::string DiamondBank::GetSectionBanner(std::string section)

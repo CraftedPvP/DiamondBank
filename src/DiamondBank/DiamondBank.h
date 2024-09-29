@@ -9,9 +9,9 @@ using std::string;
 
 class DiamondBank : Bank{
     /* UI for non-signed in users */
-    Menu login;
+    Menu unsignedInUserUI;
     /* UI for signed in users */
-    Menu signedIn;
+    Menu signedInUserUI;
 
     void OnChoose_Login(int choice);
     void OnChoose_SignedIn(int choice);
